@@ -1,14 +1,11 @@
 (provide 'modules)
 
-(setq modules-load-path "~/.emacs.d/vendor/")
-
 (setq el-get-sources
       '((:name gist :type elpa)
 	(:name paredit
 	       :after (lambda ()
 			(progn
 				(defun generic-paredit-hook ()
-				    (message "loading paredit")
 				    (paredit-mode +1)))))
 	(:name clojure-mode
 	       :after (lambda ()
@@ -30,7 +27,7 @@
 	(:name slime-repl
 	       :type elpa
 	       :after (lambda ()
-	  	  	(add-hook 'slime-repl-mode-hook 'paredit-mode-enable)))
+	  	  	(add-hook 'slime-repl-mode-hook 'generic-paredit-hook)))
 	(:name swank-clojure)
 	(:name htmlize :type elpa)
 	(:name ecb :type elpa)
@@ -62,10 +59,12 @@
 
 (add-to-list 'load-path "~/.emacs.d/el-get/el-get")
 
-(if (require 'el-get nil t)
+(unless (require 'el-get nil t)
     (url-retrieve
       "https://github.com/dimitri/el-get/raw/master/el-get-install.el"
       (lambda (s)
 	(end-of-buffer)
 	(eval-print-last-sexp)
 	(sync-packages))))
+
+(sync-packages)
