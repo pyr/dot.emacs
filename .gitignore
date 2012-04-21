@@ -1,4 +1,6 @@
 *~
 #*#
 /el-get/*
+/elpa
+/swank
 /auto-save-list
