@@ -1,5 +1,6 @@
 (source melpa)
 
+(depends-on "smex")
 (depends-on "flymake-python-pyflakes")
 (depends-on "color-theme-solarized")
 (depends-on "auto-complete")
