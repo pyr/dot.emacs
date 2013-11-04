@@ -8,6 +8,8 @@
 (add-hook 'paredit-mode-hook 'fix-paredit-delete)
 (add-hook 'clojure-mode-hook 'gen-paredit-hook)
 (add-hook 'clojure-mode-hook 'rainbow-delimiters-mode)
+(add-hook 'clojure-test-mode-hook 'gen-paredit-hook)
+(add-hook 'clojure-test-mode-hook 'rainbow-delimiters-mode)
 (add-hook 'cider-mode-hook 'cider-turn-on-eldoc-mode)
 (add-hook 'cider-mode-hook 'gen-paredit-hook)
 (add-hook 'cider-repl-mode-hook 'gen-paredit-hook)
