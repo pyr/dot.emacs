@@ -1,5 +1,5 @@
-(require 'utils "~/.emacs.d/utils.el")
 (require 'cask "~/.cask/cask.el")
 
 (cask-initialize)
-(load-files-in-dir "~/.emacs.d/customizations")
+(mapc 'load (directory-files "~/.emacs.d/customizations" t "^[0-9]+.*\.el$"))
+
