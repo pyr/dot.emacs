@@ -21,3 +21,5 @@
 
 (when window-system
   (load-theme 'solarized-light))
+
+(require 'graphene)

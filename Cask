@@ -1,5 +1,7 @@
 (source melpa)
 
+(depends-on "graphene")
+(depends-on "sr-speedbar")
 (depends-on "magit")
 (depends-on "find-file-in-project")
 (depends-on "smex")
