@@ -1,4 +1,4 @@
-(menu-bar-mode t)
+(menu-bar-mode -1)
 (global-font-lock-mode t)
 (column-number-mode t)
 (show-paren-mode t)
