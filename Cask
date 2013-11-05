@@ -1,6 +1,7 @@
 (source melpa)
 
 (depends-on "graphene")
+(depends-on "twittering-mode")
 (depends-on "sr-speedbar")
 (depends-on "magit")
 (depends-on "find-file-in-project")
