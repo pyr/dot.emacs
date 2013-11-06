@@ -19,7 +19,7 @@
 
 (global-set-key (kbd "C-c t") 'switch-theme)
 
-(when window-system
-  (load-theme 'solarized-light))
+;;(when window-system
+;;  (load-theme 'solarized-light))
 
 (require 'graphene)

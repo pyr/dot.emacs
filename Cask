@@ -1,5 +1,6 @@
 (source melpa)
 
+(depends-on "slim-mode")
 (depends-on "graphene")
 (depends-on "twittering-mode")
 (depends-on "sr-speedbar")
