@@ -29,3 +29,10 @@
 (depends-on "graphviz-dot-mode")
 (depends-on "yaml-mode")
 (depends-on "web-mode")
+(depends-on "json-mode")
+(depends-on "o-blog")
+(depends-on "coffee-mode")
+
+(source org)
+(depends-on "org")
+(depends-on "org-plus-contrib")
