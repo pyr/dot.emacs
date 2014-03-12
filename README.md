@@ -4,6 +4,8 @@ dot.emacs: a simple emacs configuration layout
 This is my emacs config meant to be easily synchronised across MacOS
 and Linux machines.
 
+![emacs config](http://i.imgur.com/45V15Pp.png)
+
 ### First time set-up
 
 This configuration relies on [cask](http://cask.github.io), please refer to
