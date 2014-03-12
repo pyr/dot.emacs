@@ -33,6 +33,7 @@
 (depends-on "o-blog")
 (depends-on "coffee-mode")
 (depends-on "ein")
+(depends-on "minimap")
 
 (source org)
 (depends-on "org")
