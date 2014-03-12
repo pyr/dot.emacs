@@ -32,6 +32,7 @@
 (depends-on "json-mode")
 (depends-on "o-blog")
 (depends-on "coffee-mode")
+(depends-on "ein")
 
 (source org)
 (depends-on "org")
