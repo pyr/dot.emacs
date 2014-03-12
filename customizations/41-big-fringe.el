@@ -1,3 +1,6 @@
+;;
+;; Bastien's big fringe mode. Great when editing org files or markdown
+;;
 (defvar-local bzg-big-fringe-mode nil)
 
 (define-minor-mode bzg-big-fringe-mode

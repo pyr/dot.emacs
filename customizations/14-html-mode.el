@@ -1,3 +1,7 @@
+;;
+;; Map C-c C-t to a tag wrapping function when editing HTML files
+;;
+
 (defun html-wrap-to-tag ()
   (interactive)
   (let (b e r)

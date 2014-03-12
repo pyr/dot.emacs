@@ -1,3 +1,9 @@
+;;
+;; Enable paredit for lisps, enable cider for clojure
+;; also enable rainbow delimiters to make lisp coding
+;; as smooth as possible
+;;
+
 (defun gen-paredit-hook ()
   (paredit-mode +1))
 

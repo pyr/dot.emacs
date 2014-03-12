@@ -1,3 +1,6 @@
+;;
+;; Write C in BSD style
+;;
 (setq c-default-style '(("c-mode" . "k&r")))
 (setq c-basic-offset 8)
 (setq-default tab-wdith 8)

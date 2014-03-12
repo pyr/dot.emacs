@@ -1,3 +1,13 @@
+;;
+;; Provide a smoother look, by removing most GUI elements:
+;; - no scrollbars
+;; - no menubar
+;; - no toolbar
+;; - no tooltips
+;; - show matching parens and braces
+;; - prevent the emacs splash screen from being displayed
+;;
+
 (menu-bar-mode -1)
 (global-font-lock-mode t)
 (column-number-mode t)
