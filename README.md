@@ -37,6 +37,21 @@ Customization may be provided in the `$HOME/.emacs.d/customizations`
 directory. Only `.el` files prefixed with two digits will be
 interpreted.
 
+Some notable out of the box customizations:
+
+- Solarized Dark and Light themes switchable with `<control>-c t`
+- Graphene for smoother fonts and small theme improvements
+- paredit and cider for great clojure support (improves emacs-lisp
+  too)
+- lots of editing modes:
+  python/ruby/haskell/coffee/markdown/clojure/json/puppet
+- a blogging engine/static site generator:
+  [o-blog](http://renard.github.io)
+- inline repl for haskell, clojure and python notebooks
+- ag integration for fast in-project searches
+- [gist](https://gist.github.com) integration for quick buffer sharing
+- great git integration thanks to magit
+
 ### Updating dependencies
 
 Dependencies may be updated by running `cask update`. Cask itself
