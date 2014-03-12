@@ -8,6 +8,12 @@ and Linux machines.
 
 ### First time set-up
 
+You will want a recent version of emacs installed:
+
+- ubuntu users will want to use this ppa: https://launchpad.net/~cassou/+archive/emacs
+- archlinux users will have access to emacs 24.3 through pacman
+- MacOS users will want to install from: http://emacsformacosx.com/
+
 This configuration relies on [cask](http://cask.github.io), please refer to
 http://cask.github.io/installation to get cask installed.
 
