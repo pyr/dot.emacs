@@ -5,3 +5,7 @@
 (setq org-plantuml-jar-path "/usr/share/java/plantuml.jar")
 (require 'ob-ditaa)
 (require 'ob-plantuml)
+
+(setq org-confirm-babel-evaluate
+      (lambda (lang body)
+        (not (string= lang "ditaa"))))
