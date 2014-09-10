@@ -38,4 +38,3 @@
 (source org)
 (depends-on "org")
 (depends-on "org-plus-contrib")
-(depends-on "org-reveal" :git "https://github.com/yjwen/org-reveal" :files ("ox-reveal.el"))
