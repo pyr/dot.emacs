@@ -1,3 +1,5 @@
+(source gnu)
+(depends-on "queue")
 (source melpa)
 
 (depends-on "slim-mode")
