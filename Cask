@@ -30,10 +30,14 @@
 (depends-on "yaml-mode")
 (depends-on "web-mode")
 (depends-on "json-mode")
-(depends-on "o-blog")
+(depends-on "o-blog" :git "https://github.com/renard/o-blog"
+                     :branch "o-blog-v1"
+                     :files ("*" (:exclude ".git")))
 (depends-on "coffee-mode")
 (depends-on "ein")
 (depends-on "minimap")
+(depends-on "go-mode")
+(depends-on "rust-mode")
 
 (source org)
 (depends-on "org")
