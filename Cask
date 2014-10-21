@@ -17,6 +17,7 @@
 (depends-on "paredit")
 (depends-on "ag")
 (depends-on "cider")
+(depends-on "cider-nrepl")
 (depends-on "clojure-mode")
 (depends-on "clojure-test-mode")
 (depends-on "gist")
