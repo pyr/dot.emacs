@@ -40,6 +40,7 @@
 (depends-on "minimap")
 (depends-on "go-mode")
 (depends-on "rust-mode")
+(depends-on "slime")
 
 (source org)
 (depends-on "org")
