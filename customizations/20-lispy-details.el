@@ -22,3 +22,8 @@
 
 ;;(add-hook 'clojure-mode-hook 'local/pretty-fn)
 ;;(add-hook 'clojurescript-mode-hook 'local/pretty-fn)
+
+(setq inferior-lisp-program "/usr/bin/sbcl")
+
+(add-hook 'scheme-mode-hook 'enable-paredit-mode)
+(add-hook 'scheme-mode-hook 'rainbow-delimiters-mode-enable)
