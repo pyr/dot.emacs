@@ -25,5 +25,15 @@
 
 (setq inferior-lisp-program "/usr/bin/sbcl")
 
+(setq scheme-program-name "csi -:c")
+(require 'quack)
+(setq scheme-program-name "csi -:c")
+
+(define-key scheme-mode-map (kbd "C-c C-l") 'scheme-load-current-file)
+
+(defun scheme-load-current-file (&optional switch)
+  (interactive "P")
+  (let ((file-name (buffer-file-name))) (scheme-load-file file-name)))
+
 (add-hook 'scheme-mode-hook 'enable-paredit-mode)
 (add-hook 'scheme-mode-hook 'rainbow-delimiters-mode-enable)

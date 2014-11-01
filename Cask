@@ -41,6 +41,9 @@
 (depends-on "go-mode")
 (depends-on "rust-mode")
 (depends-on "slime")
+(depends-on "twittering-mode")
+(depends-on "chicken-scheme")
+(depends-on "quack")
 
 (source org)
 (depends-on "org")
