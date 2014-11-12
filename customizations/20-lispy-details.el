@@ -24,6 +24,8 @@
 ;;(add-hook 'clojurescript-mode-hook 'local/pretty-fn)
 
 (setq inferior-lisp-program "/usr/bin/sbcl")
+(when (string-match "apple-darwin" system-configuration)
+  (setq inferior-lisp-program "/usr/local/bin/sbcl"))
 
 (setq scheme-program-name "csi -:c")
 (require 'quack)
