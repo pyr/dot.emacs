@@ -9,3 +9,6 @@
 (setq org-confirm-babel-evaluate
       (lambda (lang body)
         (not (string= lang "ditaa"))))
+
+(require 'org-bullets)
+(add-hook 'org-mode-hook (lambda () (org-bullets-mode 1)))
