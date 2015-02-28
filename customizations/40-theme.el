@@ -1,17 +1,23 @@
 ;;
 ;; Globally map C-c t to a light/dark theme switcher
 ;; Also pull-in graphene for better fonts
-(setq local-current-theme 'solarized-light)
+;;(require 'solarized)
 
-(defun switch-theme-to (name)
-  (setq local-current-theme name)
-  (load-theme name))
+(load-theme 'solarized t)
+
+(defun get-frame ()
+  (window-frame (frame-first-window)))
 
 (defun switch-theme ()
   (interactive)
-  (pcase local-current-theme
-    (`solarized-light (switch-theme-to 'solarized-dark))
-    (`solarized-dark  (switch-theme-to 'solarized-light))))
+  (let* ((bmode (frame-parameter (get-frame) 'background-mode))
+         (mode  (if (eq bmode 'light) 'dark 'light)))
+    (message (format "switching frame background-mode to: %s"
+                     (symbol-name mode)))
+    (set-frame-parameter (get-frame)
+                         'background-mode
+                         mode)
+    (enable-theme 'solarized)))
 
 (custom-set-variables
   '(custom-safe-themes
