@@ -17,7 +17,6 @@
 (depends-on "ag")
 (depends-on "cider")
 (depends-on "clojure-mode")
-(depends-on "clojure-test-mode")
 (depends-on "gist")
 (depends-on "pallet")
 (depends-on "projectile")
@@ -43,7 +42,8 @@
 (depends-on "quack")
 (depends-on "restclient")
 (depends-on "color-theme-solarized")
-
+(depends-on "org-page")
+(depends-on "org-trello")
 
 (source org)
 (depends-on "org")

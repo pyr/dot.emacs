@@ -62,3 +62,8 @@ Some notable out of the box customizations:
 
 Dependencies may be updated by running `cask update`. Cask itself
 may be updated by running `cask upgrade`.
+
+## Recent local changes
+
+- haskell-mode needs unquoting: https://github.com/haskell/haskell-mode/issues/596
+- o-blog v1 needs to switch to org-export-as: 

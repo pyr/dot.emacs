@@ -6,9 +6,14 @@
 (require 'ob-ditaa)
 (require 'ob-plantuml)
 
+(org-babel-do-load-languages
+ 'org-babel-load-languages
+  '((dot . t)))
+
 (setq org-confirm-babel-evaluate
       (lambda (lang body)
-        (not (string= lang "ditaa"))))
+        (not (or (string= lang "ditaa")
+                 (string= lang "dot")))))
 
 (require 'org-bullets)
 (add-hook 'org-mode-hook (lambda () (org-bullets-mode 1)))
