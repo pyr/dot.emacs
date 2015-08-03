@@ -26,5 +26,3 @@
 (set-background-mode nil solarized-default-background-mode)
 
 (global-set-key (kbd "C-c t") 'switch-theme)
-
-(require 'graphene)
