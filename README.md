@@ -1,6 +1,9 @@
 dot.emacs: a simple emacs configuration layout
 ==============================================
 
+[![Build Status](https://secure.travis-ci.org/pyr/dot.emacs.png)](http://travis-ci.org/pyr/dot.emacs)
+
+
 This is my emacs config meant to be easily synchronised across MacOS
 and Linux machines.
 
