@@ -6,7 +6,7 @@ packages:
   - libgif-dev
 install:
   - curl -o - http://mirror.team-cymru.org/gnu/emacs/emacs-24.4.tar.gz | tar xzf -
-  - cd emacs-24.4 && ./configure --prefix=/usr/local --with-xpm=no --with-gif=no && make && make install
+  - cd emacs-24.4 && ./configure --prefix=/usr/local --with-xpm=no --with-gif=no > /dev/null && make > /dev/null && make install >/dev/null
   - export PATH=/usr/local/bin:$PATH
   - curl -fsSL https://raw.githubusercontent.com/cask/cask/master/go | python
 
