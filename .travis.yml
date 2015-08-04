@@ -6,7 +6,7 @@ packages:
   - libgif-dev
 install:
   - curl -o - http://mirror.team-cymru.org/gnu/emacs/emacs-24.4.tar.gz | tar xzf -
-  - cd emacs-24.4 && ./configure --prefix=$HOME/emacs --without-jpeg --without-tiff --without-gif --without-png --without-rsvg --without-x --without-dbus --without-gconf --without-gsettings --without-compress-install --without-makeinfo --with-file-notification=no --disable-acl && (make > /dev/null || true) && (make install >/dev/null || true)
+  - cd emacs-24.4 && ./configure --prefix=$HOME/emacs --without-xml2 --with-sound=no --without-jpeg --without-tiff --with-gameuser=$USER --without-gif --without-png --without-rsvg --without-x --without-dbus --without-gconf --without-gsettings --without-compress-install --without-makeinfo --with-file-notification=no --disable-acl && (make > /dev/null || true) && (make install >/dev/null || true)
   - curl -fsSL https://raw.githubusercontent.com/cask/cask/master/go | env EMACS=$HOME/emacs/bin/emacs24 python
 
 script:
