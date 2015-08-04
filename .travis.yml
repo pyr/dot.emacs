@@ -10,5 +10,4 @@ install:
   - curl -fsSL https://raw.githubusercontent.com/cask/cask/master/go | env EMACS=$HOME/emacs/bin/emacs-24.4 python
 
 script:
-  - ls /usr/local/bin/emacs-24.4
   - env EMACS=$HOME/emacs/bin/emacs-24.4 $HOME/.cask/bin/cask install && $HOME/emacs/bin/emacs-24.4 --batch -q -l init.el
