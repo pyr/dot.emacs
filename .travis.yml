@@ -6,9 +6,12 @@ packages:
   - libgif-dev
 install:
   - curl -o - http://mirror.team-cymru.org/gnu/emacs/emacs-24.4.tar.gz | tar xzf -
-  - cd emacs-24.4 && ./configure --prefix=$HOME/emacs --without-xml2 --with-sound=no --without-jpeg --without-tiff --with-gameuser=$USER --without-gif --without-png --without-rsvg --without-x --without-dbus --without-gconf --without-gsettings --without-compress-install --without-makeinfo --with-file-notification=no --disable-acl && (make > /dev/null || true) && (make install >/dev/null || true) && cd ..
+  - cd emacs-24.4 && ./configure --prefix=$HOME/emacs --without-xml2 --with-sound=no --without-jpeg --without-tiff --with-gameuser=$USER --without-gif --without-png --without-rsvg --without-x --without-dbus --without-gconf --without-gsettings --without-compress-install --without-makeinfo --with-file-notification=no --disable-acl && (make > /dev/null || true) && (make install >/dev/null || true) 
   - curl -fsSL https://raw.githubusercontent.com/cask/cask/master/go | env EMACS=$HOME/emacs/bin/emacs-24.4 python
   - rm -rf $HOME/.emacs.d && ln -s . $HOME/.emacs.d
 
 script:
-  - env EMACS=$HOME/emacs/bin/emacs-24.4 $HOME/.cask/bin/cask install && $HOME/emacs/bin/emacs-24.4 --batch -q -l init.el
+  - pwd >&2
+  - echo $HOME >&2
+  - ls >&2
+  - cd /home/travis/build/pyr/dot.emacs/ && env EMACS=$HOME/emacs/bin/emacs-24.4 $HOME/.cask/bin/cask install && $HOME/emacs/bin/emacs-24.4 --batch -q -l init.el
