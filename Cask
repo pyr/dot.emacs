@@ -26,6 +26,14 @@
 (depends-on "yaml-mode")
 (depends-on "web-mode")
 (depends-on "json-mode")
+(depends-on "org-trello")
+
+;; For hublo
+(depends-on "ht")
+(depends-on "dash")
+(depends-on "mustache")
+;; End hublo specific deps
+
 ;;(depends-on "o-blog" :git "https://github.com/renard/o-blog"
 ;;                     :branch "o-blog-v1"
 ;;                     :files ("*" (:exclude ".git")))

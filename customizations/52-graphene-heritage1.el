@@ -32,7 +32,10 @@
 (add-hook 'prog-mode-hook
           (lambda ()
             (company-mode t)
-            (smartparens-mode t)))
+            (smartparens-mode t)
+            (sp-with-modes sp--lisp-modes
+              (sp-local-pair "'" nil :actions nil)
+              (sp-local-pair "`" nil :actions nil))))
 
 (eval-after-load 'flycheck
   '(progn

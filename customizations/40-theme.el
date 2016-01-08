@@ -26,3 +26,7 @@
 (set-background-mode nil solarized-default-background-mode)
 
 (global-set-key (kbd "C-c t") 'switch-theme)
+
+(add-to-list 'default-frame-alist '(font . "Terminus 10"))
+(when (display-graphic-p nil)
+  (set-face-attribute 'default t :font "Terminus 10"))
