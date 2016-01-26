@@ -27,6 +27,8 @@
 (depends-on "web-mode")
 (depends-on "json-mode")
 (depends-on "org-trello")
+(depends-on "calfw")
+(depends-on "org-gcal")
 
 ;; For hublo
 (depends-on "ht")
