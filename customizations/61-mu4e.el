@@ -15,6 +15,12 @@
                                      "Cell: +41 79 512 48 54. Skype: pyritschard")
       message-send-mail-function 'message-send-mail-with-sendmail
       mu4e-compose-signature-auto-include nil
+      mu4e-compose-dont-reply-to-self t
+      mu4e-user-mail-address-list '("pyr@spootnik.org"
+                                    "pyr@exoscale.ch"
+                                    "pierre-yves.ritschard@exoscale.ch"
+                                    "prd@exoscale.ch"
+                                    "pyr@openbsd.org")
       sendmail-program "/usr/bin/msmtp"
       user-full-name "Pierre-Yves Ritschard"
       user-mail-address "pyr@exoscale.ch")
