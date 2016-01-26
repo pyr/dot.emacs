@@ -40,6 +40,10 @@
 (add-to-list 'mu4e-bookmarks
              '("flag:list and flag:unread" "Mailing Lists" ?m))
 (add-to-list 'mu4e-bookmarks
+             '("maildir:/spootnik/inbox" "Spootnik Inbox" ?s))
+(add-to-list 'mu4e-bookmarks
+             '("maildir:/exoscale/inbox" "Exoscale Inbox" ?e))
+(add-to-list 'mu4e-bookmarks
              '("maildir:/exoscale/inbox or maildir:/spootnik/inbox" "Combined Inbox" ?b))
 
 (add-hook 'message-send-mail-hook 'mu4e-multi-smtpmail-set-msmtp-account)
