@@ -1,4 +1,5 @@
 (require 'mu4e-multi)
+(require 'mu4e-contrib)
 
 (setq mu4e-multi-last-read-account "exoscale")
 (setq mu4e-maildir "~/.mail"
@@ -9,7 +10,8 @@
                                ("/spootnik/inbox" . ?s))
       mu4e-get-mail-command "mbsync -a"
       mu4e-update-interval 60
-      mu4e-html2text-command "html2text --protect-links -b 72"
+
+      mu4e-html2text-command 'mu4e-shr2text
       mu4e-compose-signature (concat "Pierre-Yves Ritschard\n"
                                      "C.T.O - Exoscale\n"
                                      "Cell: +41 79 512 48 54. Skype: pyritschard")
