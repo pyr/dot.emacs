@@ -46,6 +46,7 @@
 (add-to-list 'mu4e-bookmarks
              '("maildir:/exoscale/inbox or maildir:/spootnik/inbox" "Combined Inbox" ?b))
 
+(define-key mu4e-headers-mode-map "C" 'mu4e-multi-compose-new)
 (add-hook 'message-send-mail-hook 'mu4e-multi-smtpmail-set-msmtp-account)
 
 (mu4e-multi-enable)
