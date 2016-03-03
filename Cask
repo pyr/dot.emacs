@@ -29,6 +29,8 @@
 (depends-on "org-trello")
 (depends-on "calfw")
 (depends-on "org-gcal")
+(depends-on "flx-ido")
+(depends-on "geiser")
 
 ;; For hublo
 (depends-on "ht")

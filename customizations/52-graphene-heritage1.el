@@ -59,6 +59,7 @@
 (global-set-key (kbd "M-X") 'smex-major-mode-commands)
 
 ;; Use ido for general completion
+(require 'flx-ido)
 (ido-mode 1)
 (ido-everywhere 1)
 (require 'ido-ubiquitous)
@@ -68,6 +69,7 @@
 (setq ido-enable-flex-matching t
       ido-auto-merge-work-directories-length nil
       ido-create-new-buffer 'always
+      ido-use-faces nil
       ido-use-filename-at-point 'guess)
 
 
