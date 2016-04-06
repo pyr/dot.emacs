@@ -51,5 +51,7 @@
 (define-key mu4e-headers-mode-map "C" 'mu4e-multi-compose-new)
 (add-hook 'message-send-mail-hook 'mu4e-multi-smtpmail-set-msmtp-account)
 
+(setq mu4e-change-filenames-when-moving t)
+
 
 (mu4e-multi-enable)
