@@ -23,6 +23,7 @@
           (package web-mode)
           (package json-mode)
           (package graphviz-dot-mode)
+;;	  (package color-theme-sanityinc-solarized)
           (package flx-ido)))
 
  (source gnu "http://elpa.gnu.org/packages"
@@ -33,7 +34,7 @@
 
  (source melpa "http://melpa.org/packages"
          ((package htmlize)
-          (package color-theme-solarized)))
+	  (theme   color-theme-solarized)))
 
  (source org-mode "http://orgmode.org/elpa"
          ((package org-plus-contrib)))
