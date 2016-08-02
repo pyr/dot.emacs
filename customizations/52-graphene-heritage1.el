@@ -11,7 +11,6 @@
 (company-mode t)
 
 
-
 ;; Some common ruby file names
 (dolist
     (regex
@@ -51,12 +50,6 @@
 
 ;; graphene-env
 ;; ============
-
-(require 'smex)
-(smex-initialize)
-
-(global-set-key (kbd "M-x") 'smex)
-(global-set-key (kbd "M-X") 'smex-major-mode-commands)
 
 ;; Use ido for general completion
 (require 'flx-ido)

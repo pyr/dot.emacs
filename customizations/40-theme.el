@@ -27,6 +27,6 @@
 
 (global-set-key (kbd "C-c t") 'switch-theme)
 
-(add-to-list 'default-frame-alist '(font . "Terminus 10"))
+(add-to-list 'default-frame-alist '(font . "Terminus 12"))
 (when (display-graphic-p nil)
-  (set-face-attribute 'default t :font "Terminus 10"))
+  (set-face-attribute 'default t :font "Terminus 12"))

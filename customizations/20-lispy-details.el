@@ -4,6 +4,11 @@
 ;; as smooth as possible
 ;;
 
+(require 'paredit)
+(require 'smartparens)
+(require 'rainbow-delimiters)
+(require 'cider)
+
 (defun gen-paredit-hook ()
   (paredit-mode +1))
 
@@ -16,11 +21,6 @@
 (add-hook 'clojure-mode-hook 'rainbow-delimiters-mode)
 (add-hook 'clojure-test-mode-hook 'gen-paredit-hook)
 (add-hook 'clojure-test-mode-hook 'rainbow-delimiters-mode)
-(add-hook 'cider-mode-hook 'cider-turn-on-eldoc-mode)
+;;(add-hook 'cider-mode-hook 'cider-turn-on-eldoc-mode)
 (add-hook 'cider-mode-hook 'gen-paredit-hook)
 (add-hook 'cider-repl-mode-hook 'gen-paredit-hook)
-
-(setq inferior-lisp-program "/usr/bin/sbcl")
-
-(when (string-match "apple-darwin" system-configuration)
-  (setq inferior-lisp-program "/usr/local/bin/sbcl"))

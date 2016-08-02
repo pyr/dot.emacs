@@ -17,4 +17,5 @@
 /request
 /.trello
 /.gcal-credentials
+/.emenv
 /projectile-bookmarks.eld
