@@ -20,7 +20,7 @@ You will want a recent version of emacs installed:
 This configuration relies on [emenv](https://github.com/pyr/emenv), please install
 it.
 
-Once cask is set-up you can just clone this directory in your
+Once emenv is set-up you can just clone this directory in your
 `$HOME/.emacs.d`:
 
 ```
@@ -63,4 +63,4 @@ Some notable out of the box customizations:
 
 ### Updating dependencies
 
-Dependencies may be updated by running `cask sync` then `cask install`.
+Dependencies may be updated by running `emenv sync` then `emenv install`.
