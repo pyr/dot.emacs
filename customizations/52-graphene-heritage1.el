@@ -20,17 +20,6 @@
   (global-set-key [triple-wheel-down] (lambda () (interactive) (scroll-up-command 4)))
   (global-set-key [triple-wheel-up] (lambda () (interactive) (scroll-down-command 4))))
 
-(eval-after-load 'flycheck
-  '(progn
-     (defun --flycheck-display-errors-fn (errors)
-       (mapc (lambda (err)
-               (message "flyc: %s" (flycheck-error-message err)) (sit-for 1))
-             errors))
-     (setq flycheck-highlighting-mode nil
-           flycheck-display-errors-function '--flycheck-display-errors-fn)))
-
-
-
 
 ;; graphene-env
 ;; ============
@@ -53,7 +42,6 @@
 ;; Make buffer names unique
 (require 'uniquify)
 (setq uniquify-buffer-name-style 'forward)
-
 
 ;; Save backup files in the temporary directory
 (setq backup-directory-alist `((".*" . ,temporary-file-directory))

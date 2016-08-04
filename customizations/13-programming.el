@@ -19,6 +19,15 @@
               (sp-local-pair "'" nil :actions nil)
               (sp-local-pair "`" nil :actions nil))))
 
+(eval-after-load 'flycheck
+  '(progn
+     (defun --flycheck-display-errors-fn (errors)
+       (mapc (lambda (err)
+               (message "flyc: %s" (flycheck-error-message err)) (sit-for 1))
+             errors))
+     (setq flycheck-highlighting-mode nil
+           flycheck-display-errors-function '--flycheck-display-errors-fn)))
+
 ;; C-mode
 ;; ======
 (add-hook 'c-mode-common-hook
