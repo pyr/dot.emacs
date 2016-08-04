@@ -8,8 +8,6 @@
 (package gist)
 (package ido-ubiquitous)
 (package flymake-python-pyflakes)
-(package find-file-in-project)
-(package better-defaults)
 (package rainbow-delimiters)
 (package paredit)
 (package smartparens)

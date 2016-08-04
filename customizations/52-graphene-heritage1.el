@@ -11,14 +11,6 @@
 (company-mode t)
 
 
-;; Some common ruby file names
-(dolist
-    (regex
-     '("\\.watchr$" "\\.arb$" "\\.rake$" "\\.gemspec$" "\\.ru$" "Rakefile$"
-       "Gemfile$" "Capfile$" "Guardfile$" "Rakefile$" "Cheffile$" "Vagrantfile$"
-       "Berksfile$" "\\.builder$"))
-  (add-to-list 'auto-mode-alist `(,regex . ruby-mode)))
-
 ;; Smoother scrolling
 (unless (and (boundp 'mac-mouse-wheel-smooth-scroll) mac-mouse-wheel-smooth-scroll)
   (global-set-key [wheel-down] (lambda () (interactive) (scroll-up-command 1)))
@@ -27,14 +19,6 @@
   (global-set-key [double-wheel-up] (lambda () (interactive) (scroll-down-command 2)))
   (global-set-key [triple-wheel-down] (lambda () (interactive) (scroll-up-command 4)))
   (global-set-key [triple-wheel-up] (lambda () (interactive) (scroll-down-command 4))))
-
-(add-hook 'prog-mode-hook
-          (lambda ()
-            (company-mode t)
-            (smartparens-mode t)
-            (sp-with-modes sp--lisp-modes
-              (sp-local-pair "'" nil :actions nil)
-              (sp-local-pair "`" nil :actions nil))))
 
 (eval-after-load 'flycheck
   '(progn
@@ -45,7 +29,7 @@
      (setq flycheck-highlighting-mode nil
            flycheck-display-errors-function '--flycheck-display-errors-fn)))
 
-(push '("\\.json\\'" . json-mode) auto-mode-alist)
+
 
 
 ;; graphene-env
