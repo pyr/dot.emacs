@@ -6,6 +6,13 @@
 ;; Generic
 ;; =======
 
+(require 'company)
+(require 'projectile)
+(require 'smartparens)
+
+(projectile-global-mode)
+(company-mode t)
+
 ;; Always delete trailing whitespace
 (add-hook 'prog-mode-hook
 	  (lambda ()
@@ -113,7 +120,6 @@
 ;; =======
 
 (require 'go-mode)
-
 
 ;; Tex Mode
 ;; ========

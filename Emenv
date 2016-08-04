@@ -1,3 +1,5 @@
+(source spootnik "https://elpa.sos.exo.io")
+
 (package ac-cider)
 (package clojure-mode)
 (package cider)
@@ -22,7 +24,11 @@
 (package flx-ido)
 (theme color-theme-sanityinc-solarized)
 
-
 (package htmlize)
 (theme color-theme-solarized)
 (package org-plus-contrib)
+
+(package org-reveal)
+(package protobuf)
+(package mu4e-multi)
+(package open-line)
