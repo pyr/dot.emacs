@@ -5,14 +5,16 @@
 (custom-set-variables '(solarized-termcolors 256))
 
 (setq solarized-default-background-mode 'dark)
+(setq gruvbox-default-background-mode 'dark)
 
 (load-theme 'solarized t)
+(load-theme 'gruvbox t)
 
 (defun set-background-mode (frame mode)
   (set-frame-parameter frame 'background-mode mode)
   (when (not (display-graphic-p frame))
     (set-terminal-parameter (frame-terminal frame) 'background-mode mode))
-  (enable-theme 'solarized))
+  (enable-theme (if (eq mode 'dark) 'gruvbox 'solarized)))
 
 (defun switch-theme ()
   (interactive)
@@ -21,9 +23,9 @@
     (set-background-mode nil mode)))
 
 (add-hook 'after-make-frame-functions
-          (lambda (frame) (set-background-mode frame solarized-default-background-mode)))
+          (lambda (frame) (set-background-mode frame gruvbox-default-background-mode)))
 
-(set-background-mode nil solarized-default-background-mode)
+(set-background-mode nil gruvbox-default-background-mode)
 
 (global-set-key (kbd "C-c t") 'switch-theme)
 

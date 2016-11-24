@@ -9,6 +9,9 @@
 (require 'company)
 (require 'projectile)
 (require 'smartparens)
+(require 'magit)
+(require 'gist)
+(require 'geiser)
 
 (projectile-global-mode)
 (company-mode t)
@@ -57,10 +60,10 @@
                                   java-mode-syntax-table)))
 
 (add-hook 'java-mode-hook
-                (lambda ()
-                  (setq c-basic-offset 4
-                        tab-width 4
-                        indent-tabs-mode nil)))
+	  (lambda ()
+	    (setq c-basic-offset 4
+		  tab-width 4
+		  indent-tabs-mode nil)))
 
 ;; Python Mode
 ;; ===========
@@ -69,7 +72,6 @@
 (require 'flymake-python-pyflakes)
 (add-hook 'python-mode-hook 'flymake-python-pyflakes-load)
 (setq flymake-python-pyflakes-executable "flake8")
-
 
 ;; HTML Mode
 ;; =========
@@ -88,8 +90,7 @@
     (skip-chars-backward "-_A-Za-z0-9>/")
     (skip-chars-backward "<")))
 
-(add-hook 'html-mode-hook
-	  (lambda () (local-set-key (kbd "C-c C-t") 'html-wrap-to-tag)))
+(add-hook 'html-mode-hook (lambda () (local-set-key (kbd "C-c C-t") 'html-wrap-to-tag)))
 
 ;; Clojure & Lisp
 ;; ==============
@@ -111,9 +112,11 @@
 (add-hook 'clojure-mode-hook 'rainbow-delimiters-mode)
 (add-hook 'clojure-test-mode-hook 'gen-paredit-hook)
 (add-hook 'clojure-test-mode-hook 'rainbow-delimiters-mode)
-;;(add-hook 'cider-mode-hook 'cider-turn-on-eldoc-mode)
+(add-hook 'cider-mode-hook 'turn-on-eldoc-mode)
 (add-hook 'cider-mode-hook 'gen-paredit-hook)
 (add-hook 'cider-repl-mode-hook 'gen-paredit-hook)
+
+(global-prettify-symbols-mode 1)
 
 
 ;; Go Mode
@@ -151,3 +154,23 @@
 ;; =========
 
 (push '("\\.json\\'" . json-mode) auto-mode-alist)
+
+;; Puppet Mode
+;; ===========
+
+(require 'puppet-mode)
+
+;; Markdown Mode
+;; =============
+
+(require 'markdown-mode)
+
+;; YAML Mode
+;; =========
+
+(require 'yaml-mode)
+
+;; Web Mode
+;; ========
+
+(require 'web-mode)

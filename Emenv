@@ -22,6 +22,9 @@
 (package json-mode)
 (package graphviz-dot-mode)
 (package flx-ido)
+(package geiser)
+(package mingus)
+(theme gruvbox-theme)
 (theme color-theme-sanityinc-solarized)
 
 (package htmlize)
