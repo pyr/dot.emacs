@@ -29,6 +29,6 @@
 
 (global-set-key (kbd "C-c t") 'switch-theme)
 
-(add-to-list 'default-frame-alist '(font . "Terminus 12"))
+(add-to-list 'default-frame-alist '(font . "DejaVu Sans Mono 10"))
 (when (display-graphic-p nil)
-  (set-face-attribute 'default t :font "Terminus 12"))
+  (set-face-attribute 'default t :font "DejaVu Sans Mono 10"))

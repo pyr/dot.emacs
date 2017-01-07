@@ -99,6 +99,7 @@
 (require 'smartparens)
 (require 'rainbow-delimiters)
 (require 'cider)
+(require 'cider-apropos)
 
 (defun gen-paredit-hook ()
   (paredit-mode +1))
@@ -174,3 +175,8 @@
 ;; ========
 
 (require 'web-mode)
+
+;; Rust
+;; ====
+
+(require 'rust-mode)

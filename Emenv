@@ -24,6 +24,7 @@
 (package flx-ido)
 (package geiser)
 (package mingus)
+(package rust-mode)
 (theme gruvbox-theme)
 (theme color-theme-sanityinc-solarized)
 
@@ -31,7 +32,8 @@
 (theme color-theme-solarized)
 (package org-plus-contrib)
 
-(package org-reveal)
+(package ox-reveal)
 (package protobuf)
 (package mu4e-multi)
 (package open-line)
+(package hublo)
