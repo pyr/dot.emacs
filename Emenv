@@ -1,5 +1,3 @@
-(source spootnik "https://elpa.sos.exo.io")
-
 (package ac-cider)
 (package clojure-mode)
 (package cider)
@@ -20,20 +18,11 @@
 (package yaml-mode)
 (package web-mode)
 (package json-mode)
-(package graphviz-dot-mode)
+
 (package flx-ido)
-(package geiser)
-(package mingus)
-(package rust-mode)
 (theme gruvbox-theme)
 (theme color-theme-sanityinc-solarized)
 
 (package htmlize)
 (theme color-theme-solarized)
 (package org-plus-contrib)
-
-(package ox-reveal)
-(package protobuf)
-(package mu4e-multi)
-(package open-line)
-(package hublo)
