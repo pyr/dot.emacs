@@ -25,4 +25,4 @@
 
 (package htmlize)
 (theme color-theme-solarized)
-(package org-plus-contrib)
+
