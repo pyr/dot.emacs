@@ -12,6 +12,7 @@
 (require 'magit)
 (require 'gist)
 (require 'geiser)
+(require 'ag)
 
 (projectile-global-mode)
 (company-mode t)
