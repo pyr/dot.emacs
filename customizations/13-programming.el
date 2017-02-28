@@ -181,3 +181,8 @@
 ;; ====
 
 (require 'rust-mode)
+
+;; Lua
+;; ===
+
+(require 'lua-mode)

@@ -14,7 +14,7 @@
       mu4e-html2text-command 'mu4e-shr2text
       mu4e-compose-signature (concat "Pierre-Yves Ritschard\n"
                                      "C.T.O - Exoscale\n"
-                                     "Cell: +41 79 512 48 54. Skype: pyritschard")
+                                     "Cell: +41 79 512 48 54.")
       message-send-mail-function 'message-send-mail-with-sendmail
       mu4e-compose-signature-auto-include nil
       mu4e-compose-dont-reply-to-self t

@@ -25,6 +25,8 @@
 (package geiser)
 (package mingus)
 (package rust-mode)
+(package slime)
+(package lua-mode)
 (theme gruvbox-theme)
 (theme color-theme-sanityinc-solarized)
 
