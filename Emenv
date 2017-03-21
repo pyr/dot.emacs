@@ -38,4 +38,3 @@
 (package protobuf)
 (package mu4e-multi)
 (package open-line)
-(package hublo)

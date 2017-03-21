@@ -120,12 +120,6 @@
 
 (global-prettify-symbols-mode 1)
 
-
-;; Go Mode
-;; =======
-
-(require 'go-mode)
-
 ;; Tex Mode
 ;; ========
 
@@ -157,32 +151,14 @@
 
 (push '("\\.json\\'" . json-mode) auto-mode-alist)
 
-;; Puppet Mode
-;; ===========
+;; Plain modes with no further configuration
+;; =========================================
 
 (require 'puppet-mode)
-
-;; Markdown Mode
-;; =============
-
 (require 'markdown-mode)
-
-;; YAML Mode
-;; =========
-
 (require 'yaml-mode)
-
-;; Web Mode
-;; ========
-
 (require 'web-mode)
-
-;; Rust
-;; ====
-
 (require 'rust-mode)
-
-;; Lua
-;; ===
-
 (require 'lua-mode)
+(require 'graphviz-dot-mode)
+(require 'go-mode)
