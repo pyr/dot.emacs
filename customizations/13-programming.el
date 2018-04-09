@@ -11,7 +11,6 @@
 (require 'smartparens)
 (require 'magit)
 (require 'gist)
-(require 'geiser)
 (require 'ag)
 
 (projectile-global-mode)
@@ -160,5 +159,4 @@
 (require 'web-mode)
 (require 'rust-mode)
 (require 'lua-mode)
-(require 'graphviz-dot-mode)
 (require 'go-mode)

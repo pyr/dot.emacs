@@ -21,8 +21,6 @@
 (ido-mode 1)
 (ido-everywhere 1)
 
-(require 'ido-ubiquitous)
-(ido-ubiquitous-mode t)
 (put 'ido-complete 'disabled nil)
 (put 'ido-exit-minibuffer 'disabled nil)
 (setq ido-enable-flex-matching t
