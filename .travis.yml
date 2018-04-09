@@ -10,4 +10,5 @@ script:
   - ls >&2
   - echo '=== emacs.d contents ==='
   - ls -l $HOME/.emacs.d >&2
+  - ls -l $HOME/.emacs.d/ >&2
   - emacs --batch -q -l init.el
