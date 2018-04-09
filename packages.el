@@ -39,6 +39,8 @@
 
     (gruvbox-theme . "melpa-stable")))
 
+;; XXX: we could test for an out of date refresh file
+;; and re-update accordingly
 (when (not (file-exists-p "~/.emacs.d/packages-refreshed"))
   (package-refresh-contents)
   (write-region "" "" "~/.emacs.d/packages-refreshed"))
