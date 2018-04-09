@@ -39,7 +39,11 @@
 
     (gruvbox-theme . "melpa-stable")))
 
+(when (not (file-exists-p "~/.emacs.d/packages-refreshed"))
+  (package-refresh-contents)
+  (write-region "" "" "~/.emacs.d/packages-refreshed"))
+
 (package-initialize t)
-;;(package-refresh-contents)
+
 (setq install-list (mapcar 'car package-pinned-packages))
 (mapc 'install install-list)
