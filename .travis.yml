@@ -1,14 +1,8 @@
 packages:
   - emacs
-install:
-  - echo $HOME >&2
-  - rm -rf $HOME/.emacs.d && ln -s . $HOME/.emacs.d
-
 script:
-  - pwd >&2
-  - echo $HOME >&2
-  - ls >&2
+  - rm -rf $HOME/.emacs.d
+  - ln -s `pwd` $HOME/.emacs.d
   - echo '=== emacs.d contents ==='
-  - ls -l $HOME/.emacs.d >&2
   - ls -l $HOME/.emacs.d/ >&2
   - emacs --batch -q -l init.el
