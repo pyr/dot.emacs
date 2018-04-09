@@ -7,4 +7,4 @@ script:
   - pwd >&2
   - echo $HOME >&2
   - ls >&2
-  - cd /home/travis/build/pyr/dot.emacs/ && emacs --batch -q -l init.el
+  - emacs --batch -q -l init.el
