@@ -1,3 +1,4 @@
+dist: xenial
 script:
   - dpkg -l |grep emacs
   - rm -rf $HOME/.emacs.d
