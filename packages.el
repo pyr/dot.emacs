@@ -36,6 +36,7 @@
     (web-mode . "melpa-stable")
     (clojure-mode . "melpa-stable")
     (terraform-mode . "melpa-stable")
+    (htmlize . "melpa-stable")
 
     (gruvbox-theme . "melpa-stable")))
 

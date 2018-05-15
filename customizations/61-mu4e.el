@@ -20,16 +20,18 @@
       mu4e-compose-dont-reply-to-self t
       mu4e-user-mail-address-list '("pyr@spootnik.org"
                                     "pyr@exoscale.ch"
+                                    "pyr@exoscale.com"
                                     "pierre-yves.ritschard@exoscale.ch"
+                                    "pierre-yves.ritschard@exoscale.com"
                                     "prd@exoscale.ch"
                                     "pyr@openbsd.org")
       sendmail-program "/usr/bin/msmtp"
       user-full-name "Pierre-Yves Ritschard"
-      user-mail-address "pyr@exoscale.ch")
+      user-mail-address "pyr@exoscale.com")
 
 (setq mu4e-multi-account-alist
       '(("exoscale"
-         (user-mail-address . "pyr@exoscale.ch")
+         (user-mail-address . "pyr@exoscale.com")
          (mu4e-drafts-folder . "/exoscale/Drafts")
          (mu4e-sent-folder . "/exoscale/Sent")
          (mu4e-trash-folder . "/exoscale/Trash"))
