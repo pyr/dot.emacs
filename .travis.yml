@@ -1,8 +1,5 @@
 dist: xenial
+services:
+  - docker
 script:
-  - dpkg -l |grep emacs
-  - rm -rf $HOME/.emacs.d
-  - ln -s `pwd` $HOME/.emacs.d
-  - echo '=== emacs.d contents ==='
-  - ls -l $HOME/.emacs.d/ >&2
-  - emacs --batch -q -l init.el
+  - docker build .

@@ -100,21 +100,29 @@
 (require 'rainbow-delimiters)
 (require 'cider)
 (require 'cider-apropos)
+(require 'clj-refactor)
+(require 'flycheck-joker)
 
 (defun gen-paredit-hook ()
   (paredit-mode +1))
+
+(defun local-clojure-hook ()
+  (gen-paredit-hook)
+  (clj-refactor-mode 1)
+  (yas-minor-mode 1)
+  (cljr-add-keybindings-with-prefix "C-c C-m"))
 
 (defun fix-paredit-delete ()
   (local-set-key (kbd "C-h") 'paredit-backward-delete))
 
 (add-hook 'emacs-lisp-mode-hook 'gen-paredit-hook)
 (add-hook 'paredit-mode-hook 'fix-paredit-delete)
-(add-hook 'clojure-mode-hook 'gen-paredit-hook)
+(add-hook 'clojure-mode-hook 'local-clojure-hook)
 (add-hook 'clojure-mode-hook 'rainbow-delimiters-mode)
-(add-hook 'clojure-test-mode-hook 'gen-paredit-hook)
+(add-hook 'clojure-test-mode-hook 'local-clojure-hook)
 (add-hook 'clojure-test-mode-hook 'rainbow-delimiters-mode)
 (add-hook 'cider-mode-hook 'turn-on-eldoc-mode)
-(add-hook 'cider-mode-hook 'gen-paredit-hook)
+(add-hook 'cider-mode-hook 'local-clojure-hook)
 (add-hook 'cider-repl-mode-hook 'gen-paredit-hook)
 
 (global-prettify-symbols-mode 1)
@@ -153,6 +161,8 @@
 ;; Plain modes with no further configuration
 ;; =========================================
 
+
+
 (require 'puppet-mode)
 (require 'markdown-mode)
 (require 'yaml-mode)
@@ -160,3 +170,54 @@
 (require 'rust-mode)
 (require 'lua-mode)
 (require 'go-mode)
+
+;; Lsp
+;; ===
+
+;;(require 'lsp-mode)
+
+;;(setq lsp-inhibit-message t
+;;      lsp-eldoc-rendal-all nil
+;;      lsp-highlight-symbol-at-point nil)
+
+;;(require 'lsp-ui)
+;;(require 'lsp-java)
+(require 'cquery)
+;;(require 'company-lsp)
+
+;;(push 'company-lsp company-backends)
+;;(setq company-lsp-async t)
+
+;;(add-hook 'c-mode 'lsp-cquery-enable)
+;;(add-hook 'c++-mode 'lsp-cquery-enable)
+
+
+;;(require 'lsp-ui)
+;;(require 'lsp-ui-flycheck)
+
+;;(add-hook 'lsp-mode 'lsp-ui-mode)
+
+;;(setq lsp-ui-sideline-enable t
+;;      lsp-ui-sideline-delay 0.8
+;;      lsp-ui-sideline-show-flycheck nil
+;;      lsp-ui-sideline-show-hover t
+;;      lsp-ui-sideline-show-symbol t
+;;      lsp-ui-sideline-code-actions t
+;;      lsp-ui-sideline-update-mode 'point
+;;      )
+
+;;(setq lsp-java-server-install-dir "/usr/share/java/jdtls")
+
+;;(add-hook 'java-mode-hook 'lsp-java-enable)
+(add-hook 'java-mode-hook 'flycheck-mode)
+(add-hook 'java-mode-hook 'company-mode)
+;;(add-hook 'java-mode-hook (lambda () (lsp-ui-flycheck-enable t)))
+;;(add-hook 'java-mode-hook 'lsp-ui-sideline-mode)
+;;(add-hook 'java-mode-hook (lambda () (push 'company-lsp company-backends)))
+
+;;(setq lsp-java-organize-imports nil)
+;;(setq lsp-java-save-action-organize-imports nil)
+
+;;(setq company-lsp-enable-snippet t
+;;      company-lsp-cache-candidates t)
+(push 'java-mode company-global-modes)

@@ -33,3 +33,13 @@
 ;; Make buffer names unique
 (require 'uniquify)
 (setq uniquify-buffer-name-style 'forward)
+
+(defun local-suspend-frame ()
+  "In a GUI environment, do nothing; otherwise `suspend-frame'."
+  (interactive)
+  (if (display-graphic-p)
+      (message "suspend-frame disabled for graphical displays.")
+    (suspend-frame)))
+
+(global-unset-key (kbd "C-z"))
+(global-set-key (kbd "C-z") 'local-suspend-frame)

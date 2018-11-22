@@ -12,6 +12,7 @@
 
 (setq package-pinned-packages
   '((cider . "melpa-stable")
+    (clj-refactor . "melpa-stable")
     (magit . "melpa-stable")
     (company . "melpa-stable")
     (projectile . "melpa-stable")
@@ -27,16 +28,24 @@
     (ox-reveal . "melpa")
     (mu4e-multi . "spootnik")
 
+    (lsp-mode . "melpa")
+    (company-lsp . "melpa")
+    (lsp-java . "melpa")
+    (lsp-ui . "melpa")
+    (cquery . "melpa")
+
+
     (go-mode . "melpa-stable")
     (rust-mode . "melpa-stable")
     (lua-mode . "melpa-stable")
     (puppet-mode . "melpa-stable")
     (yaml-mode . "melpa-stable")
-    (markdown-mode . "melpa-stable")
+    (markdown-mode . "melpa")
     (web-mode . "melpa-stable")
     (clojure-mode . "melpa-stable")
     (terraform-mode . "melpa-stable")
     (htmlize . "melpa-stable")
+    (flycheck-joker . "melpa-stable")
 
     (gruvbox-theme . "melpa-stable")))
 

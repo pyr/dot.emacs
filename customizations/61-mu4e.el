@@ -17,6 +17,7 @@
                                      "Cell: +41 79 512 48 54.")
       message-send-mail-function 'message-send-mail-with-sendmail
       mu4e-compose-signature-auto-include nil
+      mu4e-headers-include-related nil
       mu4e-compose-dont-reply-to-self t
       mu4e-user-mail-address-list '("pyr@spootnik.org"
                                     "pyr@exoscale.ch"
