@@ -20,3 +20,5 @@
 /.emenv
 /projectile-bookmarks.eld
 /packages-refreshed
+/forge-database.sqlite
+/network-security.data

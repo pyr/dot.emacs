@@ -14,6 +14,8 @@
 (require 'ag)
 
 (projectile-global-mode)
+(define-key projectile-mode-map (kbd "C-c p") 'projectile-command-map)
+
 (company-mode t)
 
 ;; Always delete trailing whitespace
@@ -170,54 +172,7 @@
 (require 'rust-mode)
 (require 'lua-mode)
 (require 'go-mode)
-
-;; Lsp
-;; ===
-
-;;(require 'lsp-mode)
-
-;;(setq lsp-inhibit-message t
-;;      lsp-eldoc-rendal-all nil
-;;      lsp-highlight-symbol-at-point nil)
-
-;;(require 'lsp-ui)
-;;(require 'lsp-java)
 (require 'cquery)
-;;(require 'company-lsp)
-
-;;(push 'company-lsp company-backends)
-;;(setq company-lsp-async t)
-
-;;(add-hook 'c-mode 'lsp-cquery-enable)
-;;(add-hook 'c++-mode 'lsp-cquery-enable)
-
-
-;;(require 'lsp-ui)
-;;(require 'lsp-ui-flycheck)
-
-;;(add-hook 'lsp-mode 'lsp-ui-mode)
-
-;;(setq lsp-ui-sideline-enable t
-;;      lsp-ui-sideline-delay 0.8
-;;      lsp-ui-sideline-show-flycheck nil
-;;      lsp-ui-sideline-show-hover t
-;;      lsp-ui-sideline-show-symbol t
-;;      lsp-ui-sideline-code-actions t
-;;      lsp-ui-sideline-update-mode 'point
-;;      )
-
-;;(setq lsp-java-server-install-dir "/usr/share/java/jdtls")
-
-;;(add-hook 'java-mode-hook 'lsp-java-enable)
 (add-hook 'java-mode-hook 'flycheck-mode)
 (add-hook 'java-mode-hook 'company-mode)
-;;(add-hook 'java-mode-hook (lambda () (lsp-ui-flycheck-enable t)))
-;;(add-hook 'java-mode-hook 'lsp-ui-sideline-mode)
-;;(add-hook 'java-mode-hook (lambda () (push 'company-lsp company-backends)))
-
-;;(setq lsp-java-organize-imports nil)
-;;(setq lsp-java-save-action-organize-imports nil)
-
-;;(setq company-lsp-enable-snippet t
-;;      company-lsp-cache-candidates t)
 (push 'java-mode company-global-modes)

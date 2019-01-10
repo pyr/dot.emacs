@@ -7,13 +7,11 @@
     ("gnu"          . "http://elpa.gnu.org/packages/")
     ("melpa"        . "http://melpa.org/packages/")
     ("melpa-stable" . "http://stable.melpa.org/packages/")
-    ("spootnik"     . "http://elpa.sos-ch-dk-2.exo.io/")
     ("org"          . "http://orgmode.org/elpa/")))
 
 (setq package-pinned-packages
   '((cider . "melpa-stable")
     (clj-refactor . "melpa-stable")
-    (magit . "melpa-stable")
     (company . "melpa-stable")
     (projectile . "melpa-stable")
     (gist . "melpa-stable")
@@ -26,15 +24,7 @@
     (flymake-python-pyflakes . "melpa-stable")
     (powerline . "melpa-stable")
     (ox-reveal . "melpa")
-    (mu4e-multi . "spootnik")
-
-    (lsp-mode . "melpa")
-    (company-lsp . "melpa")
-    (lsp-java . "melpa")
-    (lsp-ui . "melpa")
     (cquery . "melpa")
-
-
     (go-mode . "melpa-stable")
     (rust-mode . "melpa-stable")
     (lua-mode . "melpa-stable")
@@ -44,10 +34,12 @@
     (web-mode . "melpa-stable")
     (clojure-mode . "melpa-stable")
     (terraform-mode . "melpa-stable")
-    (htmlize . "melpa-stable")
     (flycheck-joker . "melpa-stable")
 
-    (gruvbox-theme . "melpa-stable")))
+    (gruvbox-theme . "melpa-stable")
+    (ghub . "melpa")
+    (magit . "melpa")
+    (forge . "melpa")))
 
 ;; XXX: we could test for an out of date refresh file
 ;; and re-update accordingly
