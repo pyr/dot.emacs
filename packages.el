@@ -11,7 +11,6 @@
 
 (setq package-pinned-packages
   '((cider . "melpa-stable")
-    (clj-refactor . "melpa-stable")
     (company . "melpa-stable")
     (projectile . "melpa-stable")
     (gist . "melpa-stable")
@@ -35,11 +34,10 @@
     (clojure-mode . "melpa-stable")
     (terraform-mode . "melpa-stable")
     (flycheck-joker . "melpa-stable")
-
     (gruvbox-theme . "melpa-stable")
     (ghub . "melpa")
     (magit . "melpa")
-    (forge . "melpa")))
+))
 
 ;; XXX: we could test for an out of date refresh file
 ;; and re-update accordingly

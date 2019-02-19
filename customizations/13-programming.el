@@ -102,7 +102,6 @@
 (require 'rainbow-delimiters)
 (require 'cider)
 (require 'cider-apropos)
-(require 'clj-refactor)
 (require 'flycheck-joker)
 
 (defun gen-paredit-hook ()
@@ -110,7 +109,6 @@
 
 (defun local-clojure-hook ()
   (gen-paredit-hook)
-  (clj-refactor-mode 1)
   (yas-minor-mode 1)
   (cljr-add-keybindings-with-prefix "C-c C-m"))
 
