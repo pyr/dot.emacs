@@ -109,7 +109,6 @@
 
 (defun local-clojure-hook ()
   (gen-paredit-hook)
-  (yas-minor-mode 1)
   (cljr-add-keybindings-with-prefix "C-c C-m"))
 
 (defun fix-paredit-delete ()
