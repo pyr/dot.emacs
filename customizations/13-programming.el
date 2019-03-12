@@ -102,14 +102,12 @@
 (require 'rainbow-delimiters)
 (require 'cider)
 (require 'cider-apropos)
-(require 'flycheck-joker)
 
 (defun gen-paredit-hook ()
   (paredit-mode +1))
 
 (defun local-clojure-hook ()
-  (gen-paredit-hook)
-  (cljr-add-keybindings-with-prefix "C-c C-m"))
+  (gen-paredit-hook))
 
 (defun fix-paredit-delete ()
   (local-set-key (kbd "C-h") 'paredit-backward-delete))
@@ -167,9 +165,5 @@
 (require 'yaml-mode)
 (require 'web-mode)
 (require 'rust-mode)
-(require 'lua-mode)
 (require 'go-mode)
 (require 'cquery)
-(add-hook 'java-mode-hook 'flycheck-mode)
-(add-hook 'java-mode-hook 'company-mode)
-(push 'java-mode company-global-modes)
