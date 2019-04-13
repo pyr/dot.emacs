@@ -6,8 +6,8 @@
   '(("ELPA"         . "http://tromey.com/elpa/")
     ("gnu"          . "http://elpa.gnu.org/packages/")
     ("melpa"        . "http://melpa.org/packages/")
-    ("melpa-stable" . "http://stable.melpa.org/packages/")))
-;;    ("org"          . "http://orgmode.org/elpa/")))
+    ("melpa-stable" . "http://stable.melpa.org/packages/")
+    ("org"          . "http://orgmode.org/elpa/")))
 
 (setq package-pinned-packages
   '((cider . "melpa-stable")
@@ -28,13 +28,12 @@
     (rust-mode . "melpa-stable")
     (puppet-mode . "melpa-stable")
     (yaml-mode . "melpa-stable")
-    (markdown-mode . "melpa")
+    (markdown-mode . "melpa-stable")
     (web-mode . "melpa-stable")
     (clojure-mode . "melpa-stable")
     (terraform-mode . "melpa-stable")
     (gruvbox-theme . "melpa-stable")
-    (ghub . "melpa")
-    (magit . "melpa")
+    (magit . "melpa-stable")
 ))
 
 ;; XXX: we could test for an out of date refresh file
