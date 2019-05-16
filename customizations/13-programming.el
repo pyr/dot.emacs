@@ -158,6 +158,48 @@
        "Berksfile$" "\\.builder$"))
   (add-to-list 'auto-mode-alist `(,regex . ruby-mode)))
 
+;; Ocaml
+;; =====
+
+(require 'tuareg)
+(require 'merlin)
+(require 'ocp-indent)
+
+(dolist
+   (var (car (read-from-string
+           (shell-command-to-string "opam config env --sexp"))))
+ (setenv (car var) (cadr var)))
+;; Update the emacs path
+(setq exec-path (split-string (getenv "PATH") path-separator))
+
+;;(add-hook 'tuareg-mode-hook 'tuareg-imenu-set-imenu)
+(setq auto-mode-alist
+      (append '(("\\.ml[ily]?$" . tuareg-mode)
+                ("\\.topml$" . tuareg-mode))
+              auto-mode-alist))
+;;(autoload 'utop-setup-ocaml-buffer "utop" "Toplevel for OCaml" t)
+(add-hook 'tuareg-mode-hook 'utop-minor-mode)
+(add-hook 'tuareg-mode-hook 'merlin-mode)
+(setq merlin-use-auto-complete-mode t)
+(setq merlin-error-after-save nil)
+
+;; Enable Merlin for ML buffers
+(add-hook 'tuareg-mode-hook 'merlin-mode)
+
+;; So you can do it on a mac, where `C-<up>` and `C-<down>` are used
+;; by spaces.
+(define-key merlin-mode-map
+  (kbd "C-c <up>") 'merlin-type-enclosing-go-up)
+(define-key merlin-mode-map
+  (kbd "C-c <down>") 'merlin-type-enclosing-go-down)
+(set-face-background 'merlin-type-face "#88FF44")
+
+;; -- enable auto-complete -------------------------------
+;; Not required, but useful along with merlin-mode
+(require 'auto-complete)
+(add-hook 'tuareg-mode-hook 'auto-complete-mode)
+
+
 ;; JSON Mode
 ;; =========
 

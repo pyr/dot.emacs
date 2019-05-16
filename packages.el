@@ -35,6 +35,11 @@
     (groovy-mode . "melpa-stable")
     (gruvbox-theme . "melpa-stable")
     (magit . "melpa-stable")
+    (tuareg . "melpa-stable")
+    (merlin . "melpa-stable")
+    (utop . "melpa-stable")
+    (ocp-indent . "melpa-stable")
+    (auto-complete . "melpa-stable")
 ))
 
 ;; XXX: we could test for an out of date refresh file
