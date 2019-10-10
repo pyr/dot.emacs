@@ -15,7 +15,6 @@
 (setq inhibit-splash-screen t)
 (setq inhibit-startup-message t)
 (blink-cursor-mode t)
-(set-fringe-style -1)
 (scroll-bar-mode -1)
 (tool-bar-mode -1)
 (tooltip-mode -1)

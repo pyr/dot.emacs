@@ -23,10 +23,8 @@
     (flx-ido . "melpa-stable")
     (flymake-python-pyflakes . "melpa-stable")
     (powerline . "melpa-stable")
-    (ox-reveal . "melpa")
     (cquery . "melpa")
     (go-mode . "melpa-stable")
-    (rust-mode . "melpa-stable")
     (puppet-mode . "melpa-stable")
     (yaml-mode . "melpa-stable")
     (markdown-mode . "melpa-stable")
@@ -35,12 +33,12 @@
     (terraform-mode . "melpa-stable")
     (groovy-mode . "melpa-stable")
     (gruvbox-theme . "melpa-stable")
+    (twilight-bright-theme . "melpa")
+    (nord-theme . "melpa-stable")
     (magit . "melpa-stable")
-    (tuareg . "melpa-stable")
-    (merlin . "melpa-stable")
-    (utop . "melpa-stable")
-    (ocp-indent . "melpa-stable")
-    (auto-complete . "melpa-stable")
+    (ox-reveal . "melpa")
+    (flycheck-clj-kondo . "melpa-stable")
+    (htmlize . "melpa-stable") ;; necessary for ox-reveal
 ))
 
 ;; XXX: we could test for an out of date refresh file
