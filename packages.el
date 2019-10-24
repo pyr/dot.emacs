@@ -39,6 +39,9 @@
     (ox-reveal . "melpa")
     (flycheck-clj-kondo . "melpa-stable")
     (htmlize . "melpa-stable") ;; necessary for ox-reveal
+    (eink-theme . "melpa-stable")
+    (paren-face . "melpa-stable")
+    (idle-highlight-mode . "melpa-stable")
 ))
 
 ;; XXX: we could test for an out of date refresh file

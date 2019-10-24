@@ -5,9 +5,10 @@
 ;;(custom-set-variables '(solarized-termcolors 256))
 
 ;;(setq solarized-default-background-mode 'dark)
-(setq gruvbox-default-background-mode 'dark)
+;;(setq gruvbox-default-background-mode 'dark)
 
-(load-theme 'gruvbox t)
+;;(load-theme 'gruvbox t)
+(load-theme 'eink t)
 
 ;;(defun set-background-mode (frame mode)
 ;;  (set-frame-parameter frame 'background-mode mode)

@@ -116,6 +116,7 @@
   (paredit-mode +1))
 
 (defun local-clojure-hook ()
+  (idle-highlight-mode +1)
   (flycheck-mode +1)
   (gen-paredit-hook))
 
