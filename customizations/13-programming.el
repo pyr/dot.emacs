@@ -3,50 +3,37 @@
 ;; ====================================
 ;;
 
-;; Generic
-;; =======
-
 (require 'company)
 (require 'projectile)
 (require 'smartparens)
 (require 'magit)
 (require 'gist)
 (require 'ag)
+(require 'cider)
+(require 'cider-apropos)
+(require 'flycheck-clj-kondo)
+(require 'flymake-python-pyflakes)
+(require 'puppet-mode)
+(require 'markdown-mode)
+(require 'yaml-mode)
+(require 'web-mode)
+(require 'go-mode)
+(require 'cquery)
+
+;; Generic
+;; =======
 
 (projectile-global-mode)
 (define-key projectile-mode-map (kbd "C-c p") 'projectile-command-map)
 
-(company-mode t)
+;; C and Java modes
+;; ================
+(defun prepare-c-indent ()
+  (setq c-basic-offset 4
+	tab-width 4
+	indent-tabs-mode nil))
+(add-hook 'c-mode-common-hook 'prepare-c-indent)
 
-;; Always delete trailing whitespace
-(add-hook 'prog-mode-hook
-	  (lambda ()
-	    (add-hook 'before-save-hook #'delete-trailing-whitespace nil t)))
-
-(add-hook 'prog-mode-hook
-          (lambda ()
-            (company-mode t)
-            (smartparens-mode t)
-            (sp-with-modes sp--lisp-modes
-              (sp-local-pair "'" nil :actions nil)
-              (sp-local-pair "`" nil :actions nil))))
-
-(eval-after-load 'flycheck
-  '(progn
-     (defun --flycheck-display-errors-fn (errors)
-       (mapc (lambda (err)
-               (message "flyc: %s" (flycheck-error-message err)) (sit-for 1))
-             errors))
-     (setq flycheck-highlighting-mode nil
-           flycheck-display-errors-function '--flycheck-display-errors-fn)))
-
-;; C-mode
-;; ======
-(add-hook 'c-mode-common-hook
-             (lambda ()
-               (setq c-basic-offset 4
-                     tab-width 4
-                     indent-tabs-mode nil)))
 (setq c-default-style '(("c-mode" . "k&r")))
 
 ;; Java Mode
@@ -58,14 +45,9 @@
              "Treat Java 1.5 @-style annotations as comments."
              (setq c-comment-start-regexp
                    "\\(@\\|/\\(/\\|[*][*]?\\)\\)")
-             (modify-syntax-entry ?@ "< b"
-                                  java-mode-syntax-table)))
+             (modify-syntax-entry ?@ "< b" java-mode-syntax-table)))
 
-(add-hook 'java-mode-hook
-	  (lambda ()
-	    (setq c-basic-offset 4
-		  tab-width 4
-		  indent-tabs-mode nil)))
+(add-hook 'java-mode-hook 'prepare-c-indent)
 
 (add-hook 'groovy-mode-hook
 	  (lambda ()
@@ -74,64 +56,44 @@
 		  groovy-indent-offset 2
 		  indent-tabs-mode nil)))
 
-
 ;; Python Mode
 ;; ===========
 
 ;; inline notification of python lines violating PEP8
-(require 'flymake-python-pyflakes)
 (add-hook 'python-mode-hook 'flymake-python-pyflakes-load)
 (setq flymake-python-pyflakes-executable "flake8")
-
-;; HTML Mode
-;; =========
-
-;; Map C-c C-t to a tag wrapping function when editing HTML files
-(defun html-wrap-to-tag ()
-  (interactive)
-  (let (b e r)
-    (save-excursion
-      (setq e (point))
-      (skip-chars-backward "-_A-Za-z0-9")
-      (setq b (point))
-      (setq r (buffer-substring b e))
-      (kill-region b e))
-    (insert (format "<%s></%s>" r r))
-    (skip-chars-backward "-_A-Za-z0-9>/")
-    (skip-chars-backward "<")))
-
-(add-hook 'html-mode-hook (lambda () (local-set-key (kbd "C-c C-t") 'html-wrap-to-tag)))
 
 ;; Clojure & Lisp
 ;; ==============
 
-(require 'paredit)
-(require 'smartparens)
-(require 'rainbow-delimiters)
-(require 'cider)
-(require 'cider-apropos)
-(require 'flycheck-clj-kondo)
+(defun turn-on-delete-trailing-whitespace ()
+  (add-hook 'before-save-hook #'delete-trailing-whitespace nil t))
+(defun turn-on-company-mode () (company-mode t))
+(defun turn-on-idle-highlight-mode () (idle-highlight-mode +1))
 
-(defun gen-paredit-hook ()
-  (paredit-mode +1))
+(defun prepare-smartparens ()
+  (turn-on-smartparens-strict-mode)
+  (sp-use-paredit-bindings)
+  (sp-with-modes sp--lisp-modes
+    ;; disable ', it's the quote character!
+    (sp-local-pair "'" nil :actions nil)
+    ;; also only use the pseudo-quote inside strings where it serve as
+    ;; hyperlink.
+    (sp-local-pair "`" "'" :when '(sp-in-string-p))))
 
-(defun local-clojure-hook ()
-  (idle-highlight-mode +1)
-  (flycheck-mode +1)
-  (gen-paredit-hook))
-
-(defun fix-paredit-delete ()
-  (local-set-key (kbd "C-h") 'paredit-backward-delete))
-
-(add-hook 'emacs-lisp-mode-hook 'gen-paredit-hook)
-(add-hook 'paredit-mode-hook 'fix-paredit-delete)
-(add-hook 'clojure-mode-hook 'local-clojure-hook)
-(add-hook 'clojure-mode-hook 'rainbow-delimiters-mode)
-(add-hook 'clojure-test-mode-hook 'local-clojure-hook)
-(add-hook 'clojure-test-mode-hook 'rainbow-delimiters-mode)
 (add-hook 'cider-mode-hook 'turn-on-eldoc-mode)
-(add-hook 'cider-mode-hook 'local-clojure-hook)
-(add-hook 'cider-repl-mode-hook 'gen-paredit-hook)
+
+(add-hook 'emacs-lisp-mode-hook #'aggressive-indent-mode)
+(add-hook 'css-mode-hook #'aggressive-indent-mode)
+(add-hook 'clojure-mode-hook #'aggressive-indent-mode)
+
+(add-hook 'emacs-lisp-mode-hook 'turn-on-idle-highlight-mode)
+(add-hook 'clojure-mode-hook 'turn-on-idle-highlight-mode)
+(add-hook 'cider-mode-hook 'turn-on-eldoc-mode)
+
+(add-hook 'prog-mode-hook 'turn-on-delete-trailing-whitespace)
+(add-hook 'prog-mode-hook 'turn-on-company-mode)
+(add-hook 'prog-mode-hook 'prepare-smartparens)
 
 (global-prettify-symbols-mode 1)
 
@@ -168,12 +130,3 @@
 
 ;; Plain modes with no further configuration
 ;; =========================================
-
-
-
-(require 'puppet-mode)
-(require 'markdown-mode)
-(require 'yaml-mode)
-(require 'web-mode)
-(require 'go-mode)
-(require 'cquery)

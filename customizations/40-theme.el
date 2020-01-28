@@ -7,8 +7,9 @@
 ;;(setq solarized-default-background-mode 'dark)
 ;;(setq gruvbox-default-background-mode 'dark)
 
-;;(load-theme 'gruvbox t)
-(load-theme 'eink t)
+(load-theme 'gruvbox t)
+;;(load-theme 'eink t)
+;;(load-theme 'twilight-bright t)
 
 ;;(defun set-background-mode (frame mode)
 ;;  (set-frame-parameter frame 'background-mode mode)

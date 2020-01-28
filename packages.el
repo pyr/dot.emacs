@@ -17,8 +17,9 @@
     (gist . "melpa-stable")
     (smex . "melpa-stable")
     (ag . "melpa-stable")
-    (paredit . "melpa-stable")
     (smartparens . "melpa-stable")
+    (aggressive-indent . "melpa-stable")
+    (paren-face . "melpa-stable")
     (rainbow-delimiters . "melpa-stable")
     (flx-ido . "melpa-stable")
     (flymake-python-pyflakes . "melpa-stable")
@@ -30,6 +31,7 @@
     (markdown-mode . "melpa-stable")
     (web-mode . "melpa-stable")
     (clojure-mode . "melpa-stable")
+    (lua-mode . "melpa-stable")
     (terraform-mode . "melpa-stable")
     (groovy-mode . "melpa-stable")
     (gruvbox-theme . "melpa-stable")
@@ -40,7 +42,6 @@
     (flycheck-clj-kondo . "melpa-stable")
     (htmlize . "melpa-stable") ;; necessary for ox-reveal
     (eink-theme . "melpa-stable")
-    (paren-face . "melpa-stable")
     (idle-highlight-mode . "melpa-stable")
 ))
 
