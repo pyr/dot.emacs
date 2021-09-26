@@ -1,7 +1,7 @@
-;;; init.el --- @mpenet Emacs config
+;;; init.el --- Single file emacs config
 ;;
 ;; Author: Max Penet <m@qbits.cc>
-;; URL: https://github.com/mpenet/emax
+;; URL: https://github.com/pyr/dot.emacs
 ;; Keywords: emacs config
 
 ;;; Commentary:
@@ -11,6 +11,7 @@
 ;;; License:
 
 ;; Copyright (C) 2019  Max Penet
+;; Some additional bits by Pierre-Yves Ritschard
 
 ;; This program is free software: you can redistribute it and/or
 ;; modify it under the terms of the GNU General Public License as
@@ -40,7 +41,6 @@
       make-backup-files nil
       auto-save-default nil
       auto-save-list-file-prefix nil
-      save-place nil
       vc-follow-symlinks nil
       inhibit-startup-message t
       initial-scratch-message nil
@@ -59,6 +59,7 @@
                                try-complete-lisp-symbol))
 
 (add-to-list 'process-environment "SHELL=/bin/bash")
+(add-to-list 'load-path (expand-file-name "~/.emacs.d/elisp"))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; GLOBAL BINDINGS
@@ -93,6 +94,8 @@
 (global-set-key (kbd "C-z") 'local-suspend-frame)
 
 (defun kill-default-buffer ()
+  "A function used to replace `kill-buffer`.
+The most active buffer is selected and killed."
   (interactive)
   (let (kill-buffer-query-functions) (kill-buffer)))
 
@@ -102,7 +105,7 @@
 ;; LOOK & FEEL
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
-(add-to-list 'default-frame-alist '(font . "JetBrains Mono 9"))
+(add-to-list 'default-frame-alist '(font . "JetBrains Mono 10"))
 
 ;; utf8 only
 (setq current-language-environment "UTF-8")
@@ -195,40 +198,6 @@
   :defer t
   :hook ((prog-mode . which-function-mode)))
 
-;; internal
-(use-package isearch
-  :config
-  (setq isearch-lazy-count t
-        lazy-count-prefix-format "(%s/%s) "
-        lazy-count-suffix-format nil
-        isearch-allow-scroll 'unlimited))
-
-(use-package ivy
-  :pin "melpa-stable"
-  :ensure t
-  :bind (("C-c C-r" . ivy-resume)
-         ("C-c b" . ivy-switch-buffer)
-         ("C-j" . ivy-immediate-done))
-  :init
-  (ivy-mode 1)
-  :config
-  (setq-default ;; ivy-use-virtual-buffers t
-   enable-recursive-minibuffers t
-   ivy-use-selectable-prompt t
-   ivy-virtual-abbreviate 'fullpath
-   ivy-count-format "(%d/%d) "
-   ivy-magic-tilde nil
-   ivy-dynamic-exhibit-delay-ms 150
-   ivy-re-builders-alist '((swiper . regexp-quote)
-                           (counsel-M-x . ivy--regex-fuzzy)
-                           (counsel-git . ivy--regex-fuzzy)
-                           (t . ivy--regex-plus))))
-
-(use-package swiper
-  :pin "melpa-stable"
-  :ensure t
-  :bind (("\C-t" . swiper-isearch)))
-
 (use-package aggressive-indent
   :pin "melpa-stable"
   :ensure t)
@@ -236,18 +205,6 @@
 (use-package idle-highlight-mode
   :pin "melpa-stable"
   :ensure t)
-
-(use-package counsel
-  :pin "melpa-stable"
-  :ensure t
-  :bind (("M-x" . counsel-M-x)
-         ("C-x C-m" . counsel-M-x)
-         ("C-x m" . counsel-M-x)
-         ("C-x C-g" . counsel-rg)
-         ("C-x f" . counsel-git)
-         ("C-x C-f" . counsel-find-file))
-  :config
-  (setq ivy-extra-directories nil))
 
 (use-package smex
   :pin "melpa-stable"
@@ -311,11 +268,14 @@
 
 (use-package company
   :pin "melpa-stable"
-  :ensure
+  :after cider
+  :ensure t
   :init
   (setq company-tooltip-align-annotations t
-        company-minimum-prefix-length 2
+        company-minimum-prefix-length 1
         company-require-match nil
+        company-idle-delay 0.3
+        company-tooltip-limit 10
         company-frontends '(company-pseudo-tooltip-unless-just-one-frontend
 	                        company-preview-frontend
 	                        company-echo-metadata-frontend))
@@ -366,7 +326,9 @@
 (use-package clojure-mode
   :pin "melpa-stable"
   :ensure t
+  :after flycheck-clj-kondo
   :config
+  (require 'flycheck-clj-kondo)
   (add-hook 'clojure-mode-hook #'paredit-mode))
 
 (use-package cider
@@ -406,7 +368,6 @@
   :defer t
   :mode ("\\.json$" . js-mode)
   :config
-  (setq js-indent-level tab-width)
   (add-hook 'js-mode-hook 'yas-minor-mode))
 
 (use-package nginx-mode
@@ -465,11 +426,6 @@
   :ensure t
   :mode "\\.adoc\\'")
 
-(use-package restclient
-  :pin "melpa"
-  :ensure t
-  :mode ("\\.http$". restclient-mode))
-
 (use-package gist
   :pin "melpa-stable"
   :ensure t)
@@ -478,22 +434,12 @@
   :pin "melpa-stable"
   :ensure t
   :config
-  (add-to-list 'auto-mode-alist '("\\.plantuml\\'" . plantuml-mode))
-  (add-to-list 'org-src-lang-modes '("plantuml" . plantuml)))
-
-(use-package neotree
-  :pin "melpa-stable"
-  :ensure t
-  :bind
-  (("<f7>" . 'neotree-toggle))
-  :config
-  (setq neo-theme (if (display-graphic-p) 'icons 'arrow)))
+  (add-to-list 'auto-mode-alist '("\\.plantuml\\'" . plantuml-mode)))
 
 (use-package twilight-bright-theme
   :pin "melpa"
+  :disabled t
   :ensure t)
-
-
 
 (use-package emojify
   :ensure t
@@ -517,6 +463,9 @@
   :config
   (flycheck-pos-tip-mode)
   (add-hook 'after-init-hook #'global-flycheck-mode))
+
+(use-package flycheck-clj-kondo
+  :ensure t)
 
 (use-package flyspell
   :ensure t
@@ -542,27 +491,28 @@
 (use-package clojure-snippets
   :ensure t)
 
+(use-package ripgrep
+  :ensure t)
+
 (use-package projectile
-  :ensure t
-  :init
-  (projectile-global-mode)
-  (define-key projectile-mode-map
-    (kbd "C-c p") 'projectile-command-map))
+ :pin "melpa-stable"
+ :ensure t
+ :init
+ (projectile-mode +1)
+ (define-key projectile-mode-map
+   (kbd "C-c p") 'projectile-command-map)
+ (setq projectile-project-search-path '("~/Code/")
+       projectile-completion-system 'default)
+ :config
+ (projectile-mode +1)
+ (add-to-list 'projectile-globally-ignored-files ".clj-kondo/*")
+ :bind (("C-x f" . projectile-find-file)))
 
 (use-package lsp-mode
   :ensure t
   :pin "melpa-stable"
   :commands (lsp lsp-deferred)
   :hook (go-mode . lsp-deferred))
-
-(use-package company-lsp
-  :ensure t
-  :defer t)
-
-(use-package counsel-projectile
-  :ensure t
-  :init
-  (counsel-projectile-mode))
 
 ;; config changes made through the customize UI will be stored here
 (setq custom-file (expand-file-name "custom.el" user-emacs-directory))
@@ -573,4 +523,180 @@
 (use-package ag
   :ensure t)
 
-(put 'set-goal-column 'disabled nil)
+(use-package ox-reveal
+   :ensure t)
+
+(require 'ansi-color)
+
+(defun display-ansi-colors ()
+  "Display ANSI colors in buffer"
+  (interactive)
+  (ansi-color-apply-on-region (point-min) (point-max)))
+
+(use-package groovy-mode
+  :ensure t)
+
+(use-package lua-mode
+  :ensure t)
+
+(use-package rust-mode
+  :ensure t)
+
+(use-package protobuf-mode
+  :ensure t)
+
+(use-package vscode-dark-plus-theme
+  :ensure t
+  :init (load-theme 'vscode-dark-plus t))
+
+(use-package ctrlf
+  :ensure t
+  :pin "melpa-stable"
+  :init (ctrlf-mode +1))
+
+;; (use-package project
+;;   :init (setq project-ignores ".clj-kondo")
+;;   :bind (("C-x f" . project-find-file)))
+
+(use-package consult
+  :ensure t
+  :pin "melpa-stable"
+  :bind (;; C-c bindings (mode-specific-map)
+         ("C-c h" . consult-history)
+         ("C-c m" . consult-mode-command)
+         ("C-c b" . consult-bookmark)
+         ("C-c k" . consult-kmacro)
+         ;; C-x bindings (ctl-x-map)
+         ("C-x M-:" . consult-complex-command)     ;; orig. repeat-complex-command
+         ("C-x b" . consult-buffer)                ;; orig. switch-to-buffer
+         ("C-x 4 b" . consult-buffer-other-window) ;; orig. switch-to-buffer-other-window
+         ("C-x 5 b" . consult-buffer-other-frame)  ;; orig. switch-to-buffer-other-frame
+         ;; Custom M-# bindings for fast register access
+         ("M-#" . consult-register-load)
+         ("M-'" . consult-register-store)          ;; orig. abbrev-prefix-mark (unrelated)
+         ("C-M-#" . consult-register)
+         ;; Other custom bindings
+         ("M-y" . consult-yank-pop)                ;; orig. yank-pop
+         ("<help> a" . consult-apropos)            ;; orig. apropos-command
+         ;; M-g bindings (goto-map)
+         ("M-g e" . consult-compile-error)
+         ("M-g f" . consult-flycheck)
+         ("M-g g" . consult-goto-line)             ;; orig. goto-line
+         ("M-g M-g" . consult-goto-line)           ;; orig. goto-line
+         ("M-g o" . consult-outline)
+         ("M-g m" . consult-mark)
+         ("M-g k" . consult-global-mark)
+         ("M-g i" . consult-imenu)
+         ("M-g I" . consult-project-imenu)
+         ;; M-s bindings (search-map)
+         ("C-c f f" . consult-find)
+         ("C-c f L" . consult-locate)
+         ("C-c f g" . consult-grep)
+         ("C-c f G" . consult-git-grep)
+         ("C-c f r" . consult-ripgrep)
+         ("C-c f l" . consult-line)
+         ("C-c f m" . consult-multi-occur)
+         ("C-c f k" . consult-keep-lines)
+         ("C-c f u" . consult-focus-lines)
+         ;; Isearch integration
+         ("C-c f e" . consult-isearch)
+         :map isearch-mode-map
+         ("M-e" . consult-isearch)                 ;; orig. isearch-edit-string
+         ("M-s e" . consult-isearch)               ;; orig. isearch-edit-string
+         ("M-s l" . consult-line))
+    :config
+    ;; Optionally configure a function which returns the project root directory
+    (setq consult-project-root-function
+          (lambda () (projectile-project-root)))
+)
+
+(use-package consult-flycheck
+  :after consult
+  :config
+  (setq flycheck-display-errors-delay 0.5)
+  :bind (("C-x C-l" . consult-flycheck)
+         ("C-x l" . consult-flycheck)))
+
+(use-package marginalia
+  :ensure t
+  :config
+  (marginalia-mode))
+
+(use-package embark
+  :ensure t
+  :bind
+  (("C-S-a" . embark-act)) ;; alternative for `describe-bindings'
+
+  :init
+  ;; Optionally replace the key help with a completing-read interface
+  (setq prefix-help-command #'embark-prefix-help-command)
+
+  :config
+  ;; Hide the mode line of the Embark live/completions buffers
+  (add-to-list 'display-buffer-alist
+               '("\\`\\*Embark Collect \\(Live\\|Completions\\)\\*"
+                 nil
+                 (window-parameters (mode-line-format . none)))))
+
+;; Consult users will also want the embark-consult package.
+(use-package embark-consult
+  :ensure t
+  :after (embark consult)
+  :demand t ; only necessary if you have the hook below
+  ;; if you want to have consult previews as you move around an
+  ;; auto-updating embark collect buffer
+  :hook
+  (embark-collect-mode . consult-preview-at-point-mode))
+
+;; Enable vertico
+(use-package vertico
+  :ensure t
+  :init
+  (vertico-mode)
+
+  ;; Optionally enable cycling for `vertico-next', `vertico-previous',
+  ;; `vertico-next-group' and `vertico-previous-group'.
+  ;; (setq vertico-cycle t)
+  )
+(use-package orderless
+  :ensure t
+  :init
+  (setq completion-styles '(orderless)
+        completion-category-defaults nil
+        completion-category-overrides '((file (styles partial-completion)))))
+
+
+;; Persist history over Emacs restarts. Vertico sorts by history position.
+(use-package savehist
+  :ensure t
+  :pin "melpa-stable"
+  :init
+  (savehist-mode))
+
+;; A few more useful configurations...
+(use-package emacs
+  :init
+  ;; Add prompt indicator to `completing-read-multiple'.
+  (defun crm-indicator (args)
+    (cons (concat "[CRM] " (car args)) (cdr args)))
+  (advice-add #'completing-read-multiple :filter-args #'crm-indicator)
+
+  ;; Grow and shrink minibuffer
+  ;;(setq resize-mini-windows t)
+
+  ;; Do not allow the cursor in the minibuffer prompt
+  (setq minibuffer-prompt-properties
+        '(read-only t cursor-intangible t face minibuffer-prompt))
+  (add-hook 'minibuffer-setup-hook #'cursor-intangible-mode)
+
+  ;; Allow usage of set goal column
+  (put 'set-goal-column 'disabled nil)
+
+  ;; Enable recursive minibuffers
+  (setq enable-recursive-minibuffers t))
+
+(use-package consult-projectile
+  :load-path "~/.emacs.d/elisp/consult-projectile")
+
+(provide 'init)
+;;; init.el ends here

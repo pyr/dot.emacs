@@ -18,3 +18,7 @@ session.*
 /ido.last
 /transient
 .secrets.el
+/request
+/network-security.data
+/var
+.dap-breakpoints
