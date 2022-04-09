@@ -31,7 +31,9 @@
 
 
 (setq load-prefer-newer t
-      gc-cons-threshold 50000000
+      use-short-answers t
+      gc-cons-threshold (* 100 1024 1024)
+      read-process-output-max (* 1024 1024)
       auto-window-vscroll nil
       large-file-warning-threshold 100000000
       browse-url-browser-function 'browse-url-generic
@@ -45,18 +47,7 @@
       inhibit-startup-message t
       initial-scratch-message nil
       visible-bell t
-      shell-file-name "/bin/bash"
-      hippie-expand-try-functions-list
-      '(try-expand-all-abbrevs try-expand-dabbrev
-                               try-expand-dabbrev-all-buffers
-                               try-expand-dabbrev-from-kill
-                               try-complete-file-name-partially
-                               try-complete-file-name
-                               try-expand-all-abbrevs
-                               try-expand-list
-                               try-expand-line
-                               try-complete-lisp-symbol-partially
-                               try-complete-lisp-symbol))
+      shell-file-name "/bin/bash")
 
 (add-to-list 'process-environment "SHELL=/bin/bash")
 (add-to-list 'load-path (expand-file-name "~/.emacs.d/elisp"))
@@ -76,12 +67,8 @@
 (global-set-key (kbd "C-x .") 'split-window-right)
 (global-set-key (kbd "C-x l") 'delete-window)
 (global-set-key (kbd "C-x r") 'query-replace)
-(global-set-key (kbd "C-x r") 'query-replace)
 (global-set-key "\C-x\C-r" 'query-replace)
-(global-set-key (kbd "C-.") 'find-tag)
-(global-set-key (kbd "C-,") 'pop-tag-mark)
 (global-set-key (kbd "C-;") 'comment-or-uncomment-region)
-(global-set-key (kbd "M-i") 'hippie-expand)
 
 (defun local-suspend-frame ()
   "In a GUI environment, do nothing; otherwise `suspend-frame'."
@@ -112,38 +99,33 @@ The most active buffer is selected and killed."
 (set-terminal-coding-system 'utf-8)
 (set-keyboard-coding-system 'utf-8)
 (prefer-coding-system 'utf-8)
-
 ;; TAB => 4*'\b'
 (setq-default indent-tabs-mode nil)
 (setq-default tab-width 4)
 (setq-default c-basic-offset tab-width)
 (setq-default sgml-basic-offset tab-width)
-
-;; ui
+;; UI
 (when (fboundp 'scroll-bar-mode) (scroll-bar-mode -1))
 (when (fboundp 'tool-bar-mode) (tool-bar-mode -1))
 (when (fboundp 'menu-bar-mode) (menu-bar-mode -1))
-
 (setq-default cursor-in-non-selected-windows nil)
 
-(fset 'yes-or-no-p 'y-or-n-p)
-
-;; add the current line number to the mode bar
+;; Add the current line number to the mode bar
 (line-number-mode t)
-
-;; add the current column number to the mode bar
+;; Add the current column number to the mode bar
 (column-number-mode t)
-
-;; case insensitive searches
+;; Case insensitive searches
 (set-default 'case-fold-search t)
-
-;; typed text replaces the selection if the selection is active
+;; Typed text replaces the selection if the selection is active
 (delete-selection-mode t)
-
-;; make emacs use the clipboard if running in X
+;; Make emacs use the clipboard if running in X
 (when window-system
   (setq select-enable-clipboard t
         interprogram-paste-function 'x-cut-buffer-or-selection-value))
+;; Config changes made through the customize UI will be stored here
+(setq custom-file (expand-file-name "custom.el" user-emacs-directory))
+(when (file-exists-p custom-file)
+  (load custom-file))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; PACKAGES
@@ -172,17 +154,13 @@ The most active buffer is selected and killed."
 
 (setq use-package-verbose t)
 
+;; UX
+
 (use-package paren
   :pin "melpa-stable"
   :config
   (show-paren-mode +1))
 
-(use-package elec-pair
-  :pin "melpa-stable"
-  :config
-  (electric-pair-mode +1))
-
-;; uniquify buffer names: append path if buffer names are identical
 (use-package uniquify
   :pin "melpa-stable"
   :init (setq uniquify-buffer-name-style 'post-forward-angle-brackets))
@@ -202,9 +180,22 @@ The most active buffer is selected and killed."
   :pin "melpa-stable"
   :ensure t)
 
-(use-package idle-highlight-mode
+(use-package idle-highlight-in-visible-buffers-mode
   :pin "melpa-stable"
   :ensure t)
+
+(use-package doom-modeline
+  :pin "melpa-stable"
+  :ensure t
+  :config
+  (setq doom-modeline-buffer-encoding nil)
+  :hook (after-init . doom-modeline-mode))
+
+(use-package savehist
+  :ensure t
+  :pin "melpa-stable"
+  :init
+  (savehist-mode))
 
 (use-package smex
   :pin "melpa-stable"
@@ -215,87 +206,108 @@ The most active buffer is selected and killed."
   :ensure t
   :demand t)
 
-;; internal
 (use-package whitespace
-  :diminish
+  :diminish t
   :init
-  (dolist (hook '(prog-mode-hook text-mode-hook))
-    (add-hook hook #'whitespace-mode))
-  (add-hook 'before-save-hook 'delete-trailing-whitespace)
+  :hook
+  ((prog-mode . delete-trailing-whitespace)
+   (text-mode . delete-trailing-whitespace))
   :config
   (setq whitespace-style '(face trailing lines-tail)
         whitespace-global-modes '(not erc-mode)
-        whitespace-line-column 80))
+        whitespace-line-column 120))
+
+(use-package emojify
+  :ensure t
+  :config
+  (setq emojify-display-style 'image)
+  ;; only replace unicode and github, no ascii)
+  (setq emojify-emoji-styles '(unicode github))
+  ;; echo the actual underlying character to the minibuffer when point
+  ;; is over them so we don't mess with thex displayed buffer itself
+  (setq emojify-point-entered-behaviour 'echo)
+  (global-emojify-mode 1))
 
 (use-package hl-todo
   :pin "melpa-stable"
+  :diminish t
   :ensure t
   :config
   (setq hl-todo-highlight-punctuation ":")
   (global-hl-todo-mode))
 
-;; internal
 (use-package hl-line
+  :diminish t
   :config
   (global-hl-line-mode +1))
 
-;; internal
-(use-package dired
-  :config
-  ;; dired - reuse current buffer by pressing 'a'
-  (put 'dired-find-alternate-file 'disabled nil)
-
-  ;; always delete and copy recursively
-  (setq dired-recursive-deletes 'always)
-  (setq dired-recursive-copies 'always)
-
-  ;; if there is a dired buffer displayed in the next window, use its
-  ;; current subdir, instead of the current subdir of this dired buffer
-  (setq dired-dwim-target t)
-
-  ;; enable some really cool extensions like C-x C-j(dired-jump)
-  (require 'dired-x))
-
-(use-package magit
+(use-package all-the-icons
   :pin "melpa-stable"
   :ensure t
-  :bind (("C-x g" . magit-status)
-         ("C-c C-g" . magit-status)))
+  :config (setq all-the-icons-scale-factor 1.0))
 
-(use-package company-quickhelp
+(use-package all-the-icons-ivy
+  :pin "melpa-stable"
+  :ensure t
+  :hook (after-init . all-the-icons-ivy-setup))
+
+(use-package rainbow-mode
+  :defer t
+  :ensure t)
+
+(use-package ctrlf
+  :ensure t
+  :pin "melpa-stable"
+  :init (ctrlf-mode +1))
+
+(use-package marginalia
+  :ensure t
+  :config
+  (marginalia-mode))
+
+(use-package vertico
+  :ensure t
+  :init
+  (vertico-mode))
+
+(use-package orderless
+  :ensure t
+  :init
+  (setq completion-styles '(orderless)
+        completion-category-defaults nil
+        completion-category-overrides '((file (styles partial-completion)))))
+
+;; Clojure
+(use-package flycheck
+  :pin "melpa-stable"
+  :ensure t
+  :hook
+  (after-init . global-flycheck-mode))
+
+(use-package clojure-mode
   :pin "melpa-stable"
   :ensure t)
 
-(use-package company
+(use-package vscode-dark-plus-theme
   :pin "melpa-stable"
-  :after cider
   :ensure t
-  :init
-  (setq company-tooltip-align-annotations t
-        company-minimum-prefix-length 1
-        company-require-match nil
-        company-idle-delay 0.3
-        company-tooltip-limit 10
-        company-frontends '(company-pseudo-tooltip-unless-just-one-frontend
-	                        company-preview-frontend
-	                        company-echo-metadata-frontend))
-  :config
-  (company-quickhelp-mode 1)
-  (global-company-mode)
-  :bind
-  (:map company-active-map
-        ("M-n" . nil)
-        ("M-p" . nil)
-        ("C-n" . company-select-next)
-        ("C-p" . company-select-previous)
-        ("C-d" . company-show-doc-buffer)
-        ("<tab>" . company-complete-selection)))
+  :init (load-theme 'vscode-dark-plus t))
 
-(use-package expand-region
+(use-package lsp-mode
   :pin "melpa-stable"
+  :commands lsp
   :ensure t
-  :bind (("C-o" . er/expand-region)
-         ("C-M-o" . er/contract-region)))
+  :config
+  (add-to-list 'lsp-language-id-configuration '(clojure-mode       . "clojure-mode"))
+  (add-to-list 'lsp-language-id-configuration '(clojurec-mode      . "clojurec-mode"))
+  (add-to-list 'lsp-language-id-configuration '(clojurescript-mode . "clojurescript-mode"))
+  (setq lsp-keep-workspace-alive nil)
+  :hook ((clojure-mode       . lsp)
+         (clojurec-mode      . lsp)
+         (clojurescript-mode . lsp)
+         (go-mode            . lsp)
+         (before-safe        . lsp-format-buffer)))
+
 
 (use-package paredit
   :pin "melpa-stable"
@@ -307,38 +319,26 @@ The most active buffer is selected and killed."
   (add-hook 'cider-mode-hook #'paredit-mode)
   (add-hook 'cider-repl-mode-hook #'paredit-mode)
   (add-hook 'emacs-lisp-mode-hook #'paredit-mode)
-  (add-hook 'erlang-mode-hook #'paredit-mode)
   :config
-  (defun my-paredit-delete ()
-    "If a region is active check if it is balanced and delete it otherwise
-        fallback to regular paredit behavior"
-    (interactive)
-    (if mark-active
-        (paredit-delete-region (region-beginning) (region-end))
-      (paredit-backward-delete)))
-  (define-key paredit-mode-map (kbd "C-j") nil)
   :bind (:map paredit-mode-map
-              ("C-M-h" . paredit-backward-kill-word)
-              ("C-h" . my-paredit-delete)
-              ("<delete>" . my-paredit-delete)
-              ("DEL" . my-paredit-delete)))
-
-(use-package clojure-mode
-  :pin "melpa-stable"
-  :ensure t
-  :after flycheck-clj-kondo
-  :config
-  (require 'flycheck-clj-kondo)
-  (add-hook 'clojure-mode-hook #'paredit-mode))
+              ("C-M-h" . paredit-backward-kill-word)))
 
 (use-package cider
-  :pin "melpa-stable"
   :ensure t
   :config
-  (setq nrepl-log-messages t)
-  (add-hook 'cider-repl-mode-hook #'paredit-mode)
-  (add-hook 'cider-mode-hook #'eldoc-mode)
-  (add-hook 'cider-repl-mode-hook #'eldoc-mode))
+  (setq nrepl-log-messages t
+        cider-font-lock-dynamically nil ; use lsp semantic tokens
+        cider-eldoc-display-for-symbol-at-point nil ; use lsp
+        cider-prompt-for-symbol nil)
+  :hook ((cider-repl-mode . paredit-mode)
+         (cider-mode . (lambda () (remove-hook 'completion-at-point-functions
+                                               #'cider-complete-at-point)))))
+
+(use-package lsp-ui
+  :ensure t
+  :commands lsp-ui-mode)
+
+;; Other languages
 
 (use-package go-guru
   :pin "melpa-stable"
@@ -363,39 +363,10 @@ The most active buffer is selected and killed."
   :init
   (add-hook 'go-mode-hook 'go-eldoc-setup))
 
-;; internal
-(use-package js-mode
-  :defer t
-  :mode ("\\.json$" . js-mode)
-  :config
-  (add-hook 'js-mode-hook 'yas-minor-mode))
-
 (use-package nginx-mode
   :pin "melpa-stable"
   :ensure t)
 
-(use-package doom-modeline
-  :pin "melpa-stable"
-  :ensure t
-  :config
-  (setq doom-modeline-buffer-encoding nil)
-  :hook (after-init . doom-modeline-mode))
-
-(use-package all-the-icons
-  :pin "melpa-stable"
-  :ensure t
-  :config (setq all-the-icons-scale-factor 1.0))
-
-(use-package all-the-icons-ivy
-  :pin "melpa-stable"
-  :ensure t
-  :hook (after-init . all-the-icons-ivy-setup))
-
-(use-package rainbow-mode
-  :defer t
-  :ensure t)
-
-;; internal
 (use-package css-mode
   :ensure t
   :config
@@ -422,9 +393,13 @@ The most active buffer is selected and killed."
   :defer t
   :ensure t)
 
-(use-package adoc-mode
-  :ensure t
-  :mode "\\.adoc\\'")
+;; ;; internal
+(use-package js-mode
+  :defer t
+  :mode ("\\.json$" . js-mode)
+  :config
+  (add-hook 'js-mode-hook 'yas-minor-mode))
+
 
 (use-package gist
   :pin "melpa-stable"
@@ -436,62 +411,19 @@ The most active buffer is selected and killed."
   :config
   (add-to-list 'auto-mode-alist '("\\.plantuml\\'" . plantuml-mode)))
 
-(use-package twilight-bright-theme
-  :pin "melpa"
-  :disabled t
+
+;; Project stuff
+
+(use-package company
   :ensure t)
 
-(use-package emojify
-  :ensure t
-  :config
-  (setq emojify-display-style 'image)
-  ;; only replace unicode and github, no ascii)
-  (setq emojify-emoji-styles '(unicode github))
-  ;; echo the actual underlying character to the minibuffer when point
-  ;; is over them so we don't mess with thex displayed buffer itself
-  (setq emojify-point-entered-behaviour 'echo)
-  (global-emojify-mode 1))
-
-(use-package flycheck-dialyzer
-  :ensure t)
-
-(use-package flycheck-pos-tip
-  :ensure t)
-
-(use-package flycheck
-  :ensure t
-  :config
-  (flycheck-pos-tip-mode)
-  (add-hook 'after-init-hook #'global-flycheck-mode))
-
-(use-package flycheck-clj-kondo
-  :ensure t)
-
-(use-package flyspell
-  :ensure t
-  :config
-  (setq ispell-program-name "aspell" ; use aspell instead of ispell
-        ispell-extra-args '("--sug-mode=ultra"))
-  (add-hook 'text-mode-hook #'flyspell-mode)
-  (add-hook 'prog-mode-hook #'flyspell-prog-mode)
-  :bind (:map flyspell-mode-map
-              ("C-;" . comment-or-uncomment-region)))
-
-(use-package docker
-  :ensure t)
-
-(use-package dockerfile-mode
-  :ensure t)
-
-(use-package exec-path-from-shell
-  :ensure t
-  :config
-  (exec-path-from-shell-initialize))
-
-(use-package clojure-snippets
+(use-package company-quickhelp
+  :pin "melpa-stable"
+  :after company
   :ensure t)
 
 (use-package ripgrep
+  :pin "melpa-stable"
   :ensure t)
 
 (use-package projectile
@@ -508,55 +440,7 @@ The most active buffer is selected and killed."
  (add-to-list 'projectile-globally-ignored-files ".clj-kondo/*")
  :bind (("C-x f" . projectile-find-file)))
 
-(use-package lsp-mode
-  :ensure t
-  :pin "melpa-stable"
-  :commands (lsp lsp-deferred)
-  :hook (go-mode . lsp-deferred))
-
-;; config changes made through the customize UI will be stored here
-(setq custom-file (expand-file-name "custom.el" user-emacs-directory))
-
-(when (file-exists-p custom-file)
-  (load custom-file))
-
-(use-package ag
-  :ensure t)
-
-(use-package ox-reveal
-   :ensure t)
-
-(require 'ansi-color)
-
-(defun display-ansi-colors ()
-  "Display ANSI colors in buffer"
-  (interactive)
-  (ansi-color-apply-on-region (point-min) (point-max)))
-
-(use-package groovy-mode
-  :ensure t)
-
-(use-package lua-mode
-  :ensure t)
-
-(use-package rust-mode
-  :ensure t)
-
-(use-package protobuf-mode
-  :ensure t)
-
-(use-package vscode-dark-plus-theme
-  :ensure t
-  :init (load-theme 'vscode-dark-plus t))
-
-(use-package ctrlf
-  :ensure t
-  :pin "melpa-stable"
-  :init (ctrlf-mode +1))
-
-;; (use-package project
-;;   :init (setq project-ignores ".clj-kondo")
-;;   :bind (("C-x f" . project-find-file)))
+;; Consult
 
 (use-package consult
   :ensure t
@@ -607,96 +491,24 @@ The most active buffer is selected and killed."
     :config
     ;; Optionally configure a function which returns the project root directory
     (setq consult-project-root-function
-          (lambda () (projectile-project-root)))
-)
-
-(use-package consult-flycheck
-  :after consult
-  :config
-  (setq flycheck-display-errors-delay 0.5)
-  :bind (("C-x C-l" . consult-flycheck)
-         ("C-x l" . consult-flycheck)))
-
-(use-package marginalia
-  :ensure t
-  :config
-  (marginalia-mode))
-
-(use-package embark
-  :ensure t
-  :bind
-  (("C-S-a" . embark-act)) ;; alternative for `describe-bindings'
-
-  :init
-  ;; Optionally replace the key help with a completing-read interface
-  (setq prefix-help-command #'embark-prefix-help-command)
-
-  :config
-  ;; Hide the mode line of the Embark live/completions buffers
-  (add-to-list 'display-buffer-alist
-               '("\\`\\*Embark Collect \\(Live\\|Completions\\)\\*"
-                 nil
-                 (window-parameters (mode-line-format . none)))))
-
-;; Consult users will also want the embark-consult package.
-(use-package embark-consult
-  :ensure t
-  :after (embark consult)
-  :demand t ; only necessary if you have the hook below
-  ;; if you want to have consult previews as you move around an
-  ;; auto-updating embark collect buffer
-  :hook
-  (embark-collect-mode . consult-preview-at-point-mode))
-
-;; Enable vertico
-(use-package vertico
-  :ensure t
-  :init
-  (vertico-mode)
-
-  ;; Optionally enable cycling for `vertico-next', `vertico-previous',
-  ;; `vertico-next-group' and `vertico-previous-group'.
-  ;; (setq vertico-cycle t)
-  )
-(use-package orderless
-  :ensure t
-  :init
-  (setq completion-styles '(orderless)
-        completion-category-defaults nil
-        completion-category-overrides '((file (styles partial-completion)))))
-
-
-;; Persist history over Emacs restarts. Vertico sorts by history position.
-(use-package savehist
-  :ensure t
-  :pin "melpa-stable"
-  :init
-  (savehist-mode))
-
-;; A few more useful configurations...
-(use-package emacs
-  :init
-  ;; Add prompt indicator to `completing-read-multiple'.
-  (defun crm-indicator (args)
-    (cons (concat "[CRM] " (car args)) (cdr args)))
-  (advice-add #'completing-read-multiple :filter-args #'crm-indicator)
-
-  ;; Grow and shrink minibuffer
-  ;;(setq resize-mini-windows t)
-
-  ;; Do not allow the cursor in the minibuffer prompt
-  (setq minibuffer-prompt-properties
-        '(read-only t cursor-intangible t face minibuffer-prompt))
-  (add-hook 'minibuffer-setup-hook #'cursor-intangible-mode)
-
-  ;; Allow usage of set goal column
-  (put 'set-goal-column 'disabled nil)
-
-  ;; Enable recursive minibuffers
-  (setq enable-recursive-minibuffers t))
+          (lambda () (projectile-project-root))))
 
 (use-package consult-projectile
-  :load-path "~/.emacs.d/elisp/consult-projectile")
+  :ensure t
+  :after (projectile consult))
+
+;; Treemacs
+
+(use-package treemacs
+  :ensure t)
+
+(use-package lsp-treemacs
+  :ensure t
+  :config
+  (setq lsp-treemacs-error-list-current-project-only t))
+
+(use-package treemacs-projectile
+  :ensure t)
 
 (provide 'init)
 ;;; init.el ends here
