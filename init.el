@@ -1,6 +1,5 @@
 ;;; init.el --- Single file emacs config
 ;;
-;; Author: Max Penet <m@qbits.cc>
 ;; URL: https://github.com/pyr/dot.emacs
 ;; Keywords: emacs config
 
@@ -8,25 +7,9 @@
 
 ;; Just my Emacs config
 
-;;; License:
-
+;; License: GPL
 ;; Copyright (C) 2019  Max Penet
 ;; Some additional bits by Pierre-Yves Ritschard
-
-;; This program is free software: you can redistribute it and/or
-;; modify it under the terms of the GNU General Public License as
-;; published by the Free Software Foundation, either version 3 of the
-;; License, or (at your option) any later version.
-
-;; This program is distributed in the hope that it will be useful, but
-;; WITHOUT ANY WARRANTY; without even the implied warranty of
-;; MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
-;; General Public License for more details.
-
-;; You should have received a copy of the GNU General Public License
-;; along with this program.  If not, see
-;; <https://www.gnu.org/licenses/>.
-
 ;;; Code:
 
 
@@ -50,7 +33,7 @@
       shell-file-name "/bin/bash")
 
 (add-to-list 'process-environment "SHELL=/bin/bash")
-(add-to-list 'load-path (expand-file-name "~/.emacs.d/elisp"))
+;;(add-to-list 'load-path (expand-file-name "~/.emacs.d/elisp"))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; GLOBAL BINDINGS
@@ -286,26 +269,37 @@ The most active buffer is selected and killed."
 
 (use-package clojure-mode
   :pin "melpa-stable"
-  :ensure t)
+  :ensure t
+  ;; The following can be removed when CIDER gets updated
+  :config
+  (add-to-list 'auto-mode-alist '("\\.\\(clj\\|cljd\\|dtm\\|edn\\)\\'" . clojure-mode)))
 
 (use-package vscode-dark-plus-theme
   :pin "melpa-stable"
   :ensure t
   :init (load-theme 'vscode-dark-plus t))
 
+(use-package gruvbox-theme
+  :pin "melpa-stable"
+  :ensure t
+  :init (load-theme 'gruvbox t))
+
 (use-package lsp-mode
   :pin "melpa-stable"
-  :commands lsp
+  :commands (lsp lsp-deferred)
   :ensure t
   :config
   (add-to-list 'lsp-language-id-configuration '(clojure-mode       . "clojure-mode"))
   (add-to-list 'lsp-language-id-configuration '(clojurec-mode      . "clojurec-mode"))
   (add-to-list 'lsp-language-id-configuration '(clojurescript-mode . "clojurescript-mode"))
-  (setq lsp-keep-workspace-alive nil)
-  :hook ((clojure-mode       . lsp)
-         (clojurec-mode      . lsp)
-         (clojurescript-mode . lsp)
-         (go-mode            . lsp)
+  (setq lsp-keep-workspace-alive nil
+        lsp-headerline-breadcrumb-enable nil
+        lsp-eldoc-enable-hover t
+        lsp-lense-mode t)
+  :hook ((clojure-mode       . lsp-deferred)
+         (clojurec-mode      . lsp-deferred)
+         (clojurescript-mode . lsp-deferred)
+         (go-mode            . lsp-deferred)
          (before-safe        . lsp-format-buffer)))
 
 
@@ -336,7 +330,12 @@ The most active buffer is selected and killed."
 
 (use-package lsp-ui
   :ensure t
-  :commands lsp-ui-mode)
+  :commands lsp-ui-mode
+  :config
+  (setq lsp-ui-sideline-show-code-actions nil
+        lsp-ui-sideline-delay 500
+        lsp-ui-doc-include-signature t
+        lsp-ui-sideline-enable t))
 
 ;; Other languages
 
@@ -355,13 +354,6 @@ The most active buffer is selected and killed."
                                  '(company-go))))
 
   (add-hook 'before-save-hook 'gofmt-before-save))
-
-(use-package go-eldoc
-  :pin "melpa-stable"
-  :ensure t
-  :defer t
-  :init
-  (add-hook 'go-mode-hook 'go-eldoc-setup))
 
 (use-package nginx-mode
   :pin "melpa-stable"
@@ -400,7 +392,6 @@ The most active buffer is selected and killed."
   :config
   (add-hook 'js-mode-hook 'yas-minor-mode))
 
-
 (use-package gist
   :pin "melpa-stable"
   :ensure t)
@@ -410,7 +401,6 @@ The most active buffer is selected and killed."
   :ensure t
   :config
   (add-to-list 'auto-mode-alist '("\\.plantuml\\'" . plantuml-mode)))
-
 
 ;; Project stuff
 
@@ -497,18 +487,41 @@ The most active buffer is selected and killed."
   :ensure t
   :after (projectile consult))
 
-;; Treemacs
-
-(use-package treemacs
+(use-package ox-reveal
   :ensure t)
 
-(use-package lsp-treemacs
+(use-package zig-mode
   :ensure t
   :config
-  (setq lsp-treemacs-error-list-current-project-only t))
+  (setq lsp-zig-zls-executable "/usr/bin/zls"))
 
-(use-package treemacs-projectile
+(use-package cue-mode
   :ensure t)
+
+(use-package bazel
+  :ensure t)
+
+(use-package protobuf-mode
+  :ensure t)
+
+(use-package moody
+  :ensure t
+  :config
+  (moody-replace-mode-line-buffer-identification)
+  (moody-replace-vc-mode))
+
+(use-package pyvenv
+  :ensure t
+  :config
+  (pyvenv-mode t)
+
+  ;; Set correct Python interpreter
+  (setq pyvenv-post-activate-hooks
+        (list (lambda ()
+                (setq python-shell-interpreter (concat pyvenv-virtual-env "bin/python3")))))
+  (setq pyvenv-post-deactivate-hooks
+        (list (lambda ()
+                (setq python-shell-interpreter "python3")))))
 
 (provide 'init)
 ;;; init.el ends here
